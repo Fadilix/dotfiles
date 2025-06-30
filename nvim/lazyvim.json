@@ -1,0 +1,14 @@
+{
+  "extras": [
+    "lazyvim.plugins.extras.ai.copilot",
+    "lazyvim.plugins.extras.coding.mini-surround",
+    "lazyvim.plugins.extras.lang.markdown",
+    "lazyvim.plugins.extras.util.startuptime",
+    "lazyvim.plugins.extras.vscode"
+  ],
+  "news": {
+    "NEWS.md": "10960",
+    "doc/news.txt": "24841"
+  },
+  "version": 7
+}
