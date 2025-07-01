@@ -55,7 +55,7 @@ Make sure you have the following installed:
 
 2. **Make scripts executable**
    ```bash
-   chmod +x install.sh backup.sh
+   chmod +x install.sh restore.sh
    ```
 
 3. **Install the configuration**
