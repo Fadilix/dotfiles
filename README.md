@@ -59,18 +59,10 @@ Make sure you have the following installed:
    ./install.sh
    ```
 
-5. **Log out and log back in** to apply all changes
-
-## 🎮 Usage
-
-### Key Features & Shortcuts
-
-- **Super + E**: Quick edit menu for configuration files
-- **Super + R**: Rofi application launcher  
-- **Super + Shift + E**: Emoji picker
-- **Music Player**: Access via Rofi beats script
-- **Theme Switching**: Toggle between dark/light modes
-- **Gaming Mode**: Optimize system for gaming
+5. **Run the refresh command to apply the changes**
+   ```bash
+   ~/.config/hypr/scripts/Refresh.sh
+   ```
 
 ### Configuration Management
 
@@ -81,7 +73,7 @@ Most user configurations can be found in:
 ## 🛠️ Customization
 
 ### Themes
-Multiple theme options are available. Use the quick settings menu (Super + E) to:
+Multiple theme options are available. Use the quick settings menu to:
 - Switch between dark/light modes
 - Change Rofi themes
 - Modify Kitty terminal themes
@@ -89,10 +81,6 @@ Multiple theme options are available. Use the quick settings menu (Super + E) to
 
 ### Adding Your Own Scripts
 Place custom scripts in `~/.config/hypr/UserScripts/` and they'll be integrated into the system.
-
-## 📸 Screenshots
-
-*Add more screenshots here showcasing different themes, the music player, notification system, etc.*
 
 ## 🔧 Troubleshooting
 
