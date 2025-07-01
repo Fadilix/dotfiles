@@ -1,32 +1,129 @@
 # ✨ My Hyprland Config ✨
-#### ⭐ Leave a star ⭐
-![image](https://github.com/user-attachments/assets/2e9e4f0a-e1d2-4e95-8371-1e8859d48257)
+#### ⭐ If this helps you, please leave a star ⭐
 
-Thanks to [JaKooLit](https://github.com/JakooLit) for the boilerplate
+![Hyprland Desktop Preview](https://github.com/user-attachments/assets/2e9e4f0a-e1d2-4e95-8371-1e8859d48257)
 
-# how to setup
-### Clone the repo
-```bash
-git clone https://github.com/Fadilix/dotfiles
-```
-### Go to folder
-```bash
-cd dotfiles
-```
+A beautiful, feature-rich Hyprland configuration with modern aesthetics and smooth animations. This setup includes carefully curated themes, scripts, and configurations for a premium Linux desktop experience.
 
-### Give executable right to the files
-```bash
-chmod +x install.sh
-chmod +x backup.sh
-```
+> 🙏 **Special Thanks**: This configuration is built upon the excellent work by [JaKooLit](https://github.com/JaKooLit). Check out their repository for more amazing Hyprland configurations!
 
-### Launch the installation
-```bash
-./install.sh
-```
+## ✨ Features
 
-### Backup all your data
-```bash
-./backup.sh
-```
+- 🎨 **Beautiful Themes**: Dark/Light mode support with multiple color schemes
+- 🎵 **Media Integration**: Rofi-based music player with online stations support
+- 📱 **Modern UI**: Clean notification system with SwayNC
+- 🎮 **Gaming Mode**: Toggle for optimal gaming performance
+- 🖼️ **Wallpaper Effects**: Dynamic wallpaper management with wallust
+- ⌨️ **Smart Keybindings**: Intuitive shortcuts and quick settings menu
+- 📊 **System Monitoring**: Built-in system update and monitoring scripts
+- 🔧 **Easy Customization**: User-friendly configuration management
+
+## 📦 What's Included
+
+- **Hyprland**: Window manager configuration with animations
+- **Waybar**: Status bar with custom modules
+- **Rofi**: Application launcher and various menus (emoji picker, music player, etc.)
+- **SwayNC**: Notification daemon with custom styling
+- **Kitty**: Terminal emulator configuration
+- **Neovim**: Enhanced text editor setup with LazyVim
+- **CAVA**: Audio visualizer integration
+
+## 🚀 Quick Installation
+
+### Prerequisites
+Make sure you have the following installed:
+- Hyprland
+- Git
+- Basic development tools
+
+### Installation Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Fadilix/dotfiles
+   cd dotfiles
+   ```
+
+2. **Make scripts executable**
+   ```bash
+   chmod +x install.sh backup.sh
+   ```
+
+3. **Backup your existing configuration** (Recommended)
+   ```bash
+   ./backup.sh
+   ```
+
+4. **Install the configuration**
+   ```bash
+   ./install.sh
+   ```
+
+5. **Log out and log back in** to apply all changes
+
+## 🎮 Usage
+
+### Key Features & Shortcuts
+
+- **Super + E**: Quick edit menu for configuration files
+- **Super + R**: Rofi application launcher  
+- **Super + Shift + E**: Emoji picker
+- **Music Player**: Access via Rofi beats script
+- **Theme Switching**: Toggle between dark/light modes
+- **Gaming Mode**: Optimize system for gaming
+
+### Configuration Management
+
+Most user configurations can be found in:
+- `~/.config/hypr/UserConfigs/` - User-specific settings
+- `~/.config/hypr/UserScripts/` - Custom scripts
+
+## 🛠️ Customization
+
+### Themes
+Multiple theme options are available. Use the quick settings menu (Super + E) to:
+- Switch between dark/light modes
+- Change Rofi themes
+- Modify Kitty terminal themes
+- Adjust monitor profiles
+
+### Adding Your Own Scripts
+Place custom scripts in `~/.config/hypr/UserScripts/` and they'll be integrated into the system.
+
+## 📸 Screenshots
+
+*Add more screenshots here showcasing different themes, the music player, notification system, etc.*
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+1. **Installation fails**: Make sure all dependencies are installed
+2. **Themes not applying**: Try logging out and back in
+3. **Scripts not working**: Check file permissions with `chmod +x`
+
+### Getting Help
+
+If you encounter issues:
+1. Check the [Issues](https://github.com/Fadilix/dotfiles/issues) section
+2. Review the original [JaKooLit repository](https://github.com/JaKooLit) for additional documentation
+3. Open a new issue with detailed information about your problem
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest new features
+- Submit pull requests
+- Share your customizations
+
+## 🌟 Acknowledgments
+
+- [JaKooLit](https://github.com/JaKooLit) - Original configuration and inspiration
+- Hyprland community - For the amazing window manager
+- All contributors to the various tools and themes used
+
+---
+
+**Enjoyed this configuration?** ⭐ Star this repository and follow for more awesome Linux setups!
 
