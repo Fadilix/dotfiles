@@ -4,11 +4,11 @@
 ## 
 ![Hyprland Desktop Preview](https://github.com/user-attachments/assets/2e9e4f0a-e1d2-4e95-8371-1e8859d48257)
 ##
-![image](https://github.com/user-attachments/assets/1ce650b2-9e54-4f30-959a-778eaabe8939)
+![image](./screenshots/rofi.png)
 ##
-![Uploading image.png…]()
+![Neovim](https://github.com/user-attachments/assets/1ce650b2-9e54-4f30-959a-778eaabe8939)
 ##
-![Uploading image.png…]()
+![image](./screenshots/fastfetch_cmatrix.png)
 ##
 
 A beautiful, feature-rich Hyprland configuration with modern aesthetics and smooth animations. This setup includes carefully curated themes, scripts, and configurations for a premium Linux desktop experience.
@@ -43,7 +43,7 @@ Make sure you have the following installed:
 - Hyprland
 - Git
 - Basic development tools
-- JaKooLit base config
+- [JaKooLit base config](https://github.com/JaKooLit/Arch-Hyprland)
 
 ### Installation Steps
 
@@ -58,14 +58,14 @@ Make sure you have the following installed:
    chmod +x install.sh backup.sh
    ```
 
-3. **Backup your existing configuration** (Recommended)
-   ```bash
-   ./backup.sh
-   ```
-
-4. **Install the configuration**
+3. **Install the configuration**
    ```bash
    ./install.sh
+   ```
+
+4. **Restore your previous config** (In case you wanna go back after installing my config)
+   ```bash
+   ./restore.sh
    ```
 
 5. **Run the refresh command to apply the changes**
