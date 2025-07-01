@@ -94,7 +94,7 @@ Place custom scripts in `~/.config/hypr/UserScripts/` and they'll be integrated 
 
 If you encounter issues:
 1. Check the [Issues](https://github.com/Fadilix/dotfiles/issues) section
-2. Review the original [Fadilix repository](https://github.com/Fadilix) for additional documentation
+2. Review the original [JaKooLit repository](https://github.com/JaKooLit) for additional documentation
 3. Open a new issue with detailed information about your problem
 
 ## 🤝 Contributing
