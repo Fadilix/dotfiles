@@ -1,17 +1,26 @@
 #!/bin/bash
 
-# Exit on any error
 set -e
 
-# colors to make the cli cool a little bit
+# ANSI color codes
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
+YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+BOLD='\033[1m'
+DIM='\033[2m'
 RESET='\033[0m'
 
-# Configuration folders to backup and install
+# Status symbols
+CHECK="✓"
+CROSS="✗"
+ARROW=">"
+INFO="i"
+
+# Config directories to process
 folders=(
   "cava"
   "hypr"
@@ -22,7 +31,7 @@ folders=(
   "waybar"
 )
 
-# Packages to install via yay
+# AUR packages
 packages_to_install=(
   "cava"
   "kitty"
@@ -30,95 +39,184 @@ packages_to_install=(
   "rofi"
   "swaync"
   "waybar"
+  "fastfetch"
+  "zoxide"
+  "fzf"
+  "cmatrix"
 )
 
-# Error handling function
 error_exit() {
-  echo -e "${RED}Error: $1${RESET}" >&2
+  echo -e "\n${RED}${CROSS} Error: $1${RESET}" >&2
   exit 1
 }
 
+# Progress bar with percentage
+show_progress() {
+  local current=$1
+  local total=$2
+  local percentage=$((current * 100 / total))
+  local dots=$((current * 20 / total))
+  
+  printf "\r${CYAN}Progress: ["
+  for ((i=0; i<dots; i++)); do printf "#"; done
+  for ((i=dots; i<20; i++)); do printf "."; done
+  printf "] ${WHITE}%d%% ${DIM}(%d/%d)${RESET}" $percentage $current $total
+}
+
+print_header() {
+  local title="$1"
+  echo -e "\n${BOLD}${BLUE}===========================================${RESET}"
+  echo -e "${BOLD}${WHITE}  $title${RESET}"
+  echo -e "${BOLD}${BLUE}===========================================${RESET}"
+}
+
+print_success() {
+  echo -e "${GREEN}${CHECK} $1${RESET}"
+}
+
+print_warning() {
+  echo -e "${YELLOW}! $1${RESET}"
+}
+
+print_info() {
+  echo -e "${CYAN}${ARROW} $1${RESET}"
+}
+
 backup() {
-  echo -e "${GREEN}Starting backup of configuration folders...${RESET}"
+  print_header "Backing Up Configuration"
+  
+  local total=${#folders[@]}
+  local current=0
+  
   for folder in "${folders[@]}"; do
-    # check if the folder exists
+    current=$((current + 1))
+    show_progress $current $total
+    
     if [ -d "$HOME/.config/$folder" ]; then
-      # create backup directory if it doesn't exist
       mkdir -p "$HOME/backup"
-      # copy the folder to the backup directory
-      cp -r "$HOME/.config/$folder" "$HOME/backup/" || error_exit "Failed to copy $HOME/.config/$folder"
-      echo -e "${GREEN}Backed up $folder to $HOME/backup/$folder${RESET}"
+      cp -r "$HOME/.config/$folder" "$HOME/backup/" || error_exit "Failed to backup $folder"
+      echo -e "\n${GREEN}${CHECK} Backed up: $folder${RESET}"
     else
-      echo -e "${YELLOW}Folder $folder does not exist, skipping.${RESET}"
+      echo -e "\n${YELLOW}! Folder $folder not found, skipping${RESET}"
     fi
+    sleep 0.1
   done
+
+  echo -e "\n"
+  print_info "Backing up .zshrc..."
+  if [ -f "$HOME/.zshrc" ]; then
+    mkdir -p "$HOME/backup"
+    cp "$HOME/.zshrc" "$HOME/backup/" || error_exit "Failed to backup .zshrc"
+    print_success "Backed up .zshrc"
+  else
+    print_warning ".zshrc not found, skipping"
+  fi
 }
 
 copy_folders() {
-  echo -e "${GREEN}Starting installation of configuration folders...${RESET}"
+  print_header "Installing Configurations"
+  
+  local total=${#folders[@]}
+  local current=0
+  
   for folder in "${folders[@]}"; do
-    # check if the folder exists in the repository
+    current=$((current + 1))
+    show_progress $current $total
+    
     if [ -d "$PWD/$folder" ]; then
-      # create target directory if it doesn't exist
       mkdir -p "$HOME/.config/$folder"
-      # copy the folder to the target directory
-      cp -r "$PWD/$folder/." "$HOME/.config/$folder/" || error_exit "Failed to copy $PWD/$folder to $HOME/.config/$folder"
-      echo -e "${GREEN}Installed $folder to $HOME/.config/$folder${RESET}"
+      cp -r "$PWD/$folder/." "$HOME/.config/$folder/" || error_exit "Failed to install $folder"
+      echo -e "\n${GREEN}${CHECK} Installed: $folder${RESET}"
     else
-      echo -e "${YELLOW}Folder $folder does not exist in the repository, skipping.${RESET}"
+      echo -e "\n${YELLOW}! Source folder $folder not found, skipping${RESET}"
     fi
+    sleep 0.1
   done
+  echo
 }
 
 install_packages() {
-  echo -e "${GREEN}Starting installation of packages...${RESET}"
+  print_header "Installing Packages"
 
-  # Check if yay is installed
   if ! command -v yay &>/dev/null; then
-    echo -e "${RED}Error: yay is not installed. Please install yay first.${RESET}"
+    echo -e "${RED}${CROSS} yay not found. Please install yay first.${RESET}"
     return 1
   fi
 
+  local total=${#packages_to_install[@]}
+  local current=0
+  local installed=0
+  local skipped=0
+
   for package in "${packages_to_install[@]}"; do
-    # Check if package is already installed via pacman/yay
+    current=$((current + 1))
+    show_progress $current $total
+    
     if yay -Qq "$package" &>/dev/null; then
-      echo -e "${YELLOW}$package is already installed, skipping.${RESET}"
+      echo -e "\n${YELLOW}! $package already installed${RESET}"
+      skipped=$((skipped + 1))
     else
-      echo -e "${GREEN}Installing $package...${RESET}"
+      echo -e "\n${CYAN}${ARROW} Installing $package...${RESET}"
       if yay -S --noconfirm "$package"; then
-        echo -e "${GREEN}$package installed successfully.${RESET}"
+        print_success "$package installed"
+        installed=$((installed + 1))
       else
-        echo -e "${RED}Failed to install $package.${RESET}"
+        echo -e "${RED}${CROSS} Failed to install $package${RESET}"
       fi
     fi
+    sleep 0.1
   done
+  
+  echo -e "\n${CYAN}${INFO} Summary: ${GREEN}$installed installed${RESET}, ${YELLOW}$skipped skipped${RESET}"
 }
 
 main() {
-  echo -e "${BLUE}Starting the installation script...${RESET}"
-  echo -e "${BLUE}This script will backup your existing configs and install new ones.${RESET}"
+  clear
+  
+  echo -e "${BOLD}${PURPLE}"
+  echo "==========================================="
+  echo "    Fadilix Hyprland Configuration Installer"
+  echo "          https://github.com/Fadilix"
+  echo "==========================================="
+  echo -e "${RESET}"
+  echo -e "${DIM}This will backup existing configs and install new ones${RESET}\n"
 
-  # Ask for confirmation
-  read -p "Do you want to continue? (y/N): " -n 1 -r
+  echo -e "${BOLD}${WHITE}Configuration folders:${RESET}"
+  for folder in "${folders[@]}"; do
+    echo -e "  ${CYAN}${ARROW}${RESET} $folder"
+  done
+  
+  echo -e "\n${BOLD}${WHITE}Packages to install (${#packages_to_install[@]} total):${RESET}"
+  for package in "${packages_to_install[@]}"; do
+    echo -e "  ${CYAN}${ARROW}${RESET} $package"
+  done
+
+  echo -e "\n${BOLD}${YELLOW}! Warning: This will backup and replace your configs!${RESET}"
+  echo -e "${WHITE}Continue? ${DIM}(y/N):${RESET} "
+  read -n 1 -r
   echo
+  
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "${YELLOW}Installation cancelled.${RESET}"
+    echo -e "${YELLOW}Installation cancelled${RESET}"
     exit 0
   fi
 
-  # Backup existing configuration folders
+  echo -e "\n${GREEN}${CHECK} Starting installation...${RESET}"
+
   backup
-
-  # Copy new configuration folders
   copy_folders
-
-  # Install packages
   install_packages
 
+  print_header "Finalizing Setup"
+  print_info "Running refresh script..."
   ~/.config/hypr/scripts/Refresh.sh
 
-  echo -e "${GREEN}Installation completed successfully!${RESET}"
+  echo -e "\n${BOLD}${GREEN}"
+  echo "==========================================="
+  echo "     Installation Complete!"
+  echo "==========================================="
+  echo -e "${RESET}"
+  echo -e "${GREEN}${CHECK} All done! Please close the terminal!${RESET}\n"
 }
 
 main
-
