@@ -1,4 +1,4 @@
-# ✨ My Hyprland Config ✨
+# ✨ My Hyprland Config ✨(Beta version)
 #### ⭐ If this helps you, please leave a star ⭐
 
 ## 
