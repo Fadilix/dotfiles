@@ -1,7 +1,15 @@
 # ✨ My Hyprland Config ✨
 #### ⭐ If this helps you, please leave a star ⭐
 
+## 
 ![Hyprland Desktop Preview](https://github.com/user-attachments/assets/2e9e4f0a-e1d2-4e95-8371-1e8859d48257)
+##
+![image](https://github.com/user-attachments/assets/1ce650b2-9e54-4f30-959a-778eaabe8939)
+##
+![Uploading image.png…]()
+##
+![Uploading image.png…]()
+##
 
 A beautiful, feature-rich Hyprland configuration with modern aesthetics and smooth animations. This setup includes carefully curated themes, scripts, and configurations for a premium Linux desktop experience.
 
@@ -35,6 +43,7 @@ Make sure you have the following installed:
 - Hyprland
 - Git
 - Basic development tools
+- JaKooLit base config
 
 ### Installation Steps
 
