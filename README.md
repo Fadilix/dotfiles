@@ -5,4 +5,10 @@
 Thanks to [JaKooLit](https://github.com/JakooLit) for the boilerplate
 
 # how to setup
-Coming soon...
+### Clone the repo
+```bash
+git clone https://github.com/Fadilix/dotfiles
+```
+### launch the installation
+./install.sh
+
