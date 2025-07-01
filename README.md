@@ -9,6 +9,20 @@ Thanks to [JaKooLit](https://github.com/JakooLit) for the boilerplate
 ```bash
 git clone https://github.com/Fadilix/dotfiles
 ```
-### launch the installation
+### Go to folder
+```bash
+cd dotfiles
+```
+
+### Give executable right to the files
+```bash
+chmod +x install.sh
+chmod +x backup.sh
+```
+
+### Launch the installation
 ./install.sh
+
+### Backup all your data
+./backup.sh
 
