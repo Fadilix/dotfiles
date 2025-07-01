@@ -1,5 +1,5 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# /* ---- 💫 https://github.com/Fadilix 💫 ---- */  ##
 # Screenshots scripts
 
 iDIR="$HOME/.config/swaync/icons"

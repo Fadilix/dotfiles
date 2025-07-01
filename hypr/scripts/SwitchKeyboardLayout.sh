@@ -1,5 +1,5 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# /* ---- 💫 https://github.com/Fadilix 💫 ---- */  ##
 # This is for changing kb_layouts. Set kb_layouts in $settings_file
 
 layout_f="$HOME/.cache/kb_layout"

@@ -1,5 +1,5 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  #
+# /* ---- 💫 https://github.com/Fadilix 💫 ---- */  #
 # Wallpaper Effects using imagemagick
 # Inspiration from ML4W - Stephan Raabe https://gitlab.com/stephan-raabe/dotfiles
 

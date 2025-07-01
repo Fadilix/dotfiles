@@ -1,5 +1,5 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# /* ---- 💫 https://github.com/Fadilix 💫 ---- */  ##
 # Rofi Emoticons. Not my own. Cant remember the source
 
 sed '1,/^# # DATA # #$/d' $0 | 

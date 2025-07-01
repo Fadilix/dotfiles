@@ -1,5 +1,5 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# /* ---- 💫 https://github.com/Fadilix 💫 ---- */  ##
 # Keyhints. Idea got from Garuda Hyprland
 
 # Detect monitor resolution and scale
@@ -76,4 +76,4 @@ yad --width=$dynamic_width --height=$dynamic_height \
 " H" "Launch this app" "" \
 " E" "View or EDIT Keybinds, Settings, Monitor" "" \
 "" "" "" \
-"More tips:" "https://github.com/JaKooLit/Hyprland-Dots/wiki" ""\
+"More tips:" "https://github.com/Fadilix/Hyprland-Dots/wiki" ""\
