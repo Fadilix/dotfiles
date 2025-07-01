@@ -21,8 +21,12 @@ chmod +x backup.sh
 ```
 
 ### Launch the installation
+```bash
 ./install.sh
+```
 
 ### Backup all your data
+```bash
 ./backup.sh
+```
 
