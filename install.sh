@@ -132,6 +132,24 @@ copy_folders() {
     fi
     sleep 0.1
   done
+
+  # Handle .zshrc installation
+  print_info "Installing .zshrc..."
+  if [ -f "$PWD/.zshrc" ]; then
+    # Remove existing .zshrc if it exists
+    [ -f "$HOME/.zshrc" ] && rm "$HOME/.zshrc"
+    
+    # Copy the zshrc from dotfiles to user's home directory
+    cp "$PWD/.zshrc" "$HOME/.zshrc" || error_exit "Failed to install .zshrc"
+    print_success "Installed .zshrc"
+    
+    # Source the new .zshrc
+    print_info "Sourcing .zshrc..."
+    source "$HOME/.zshrc" || print_warning "Failed to source .zshrc (this is normal in some cases)"
+  else
+    print_warning ".zshrc not found in dotfiles, skipping"
+  fi
+
   echo
 }
 
