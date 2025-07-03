@@ -73,6 +73,11 @@ Make sure you have the following installed:
    ~/.config/hypr/scripts/Refresh.sh
    ```
 
+6. **Fonts enhancing and smoothing**
+   ```bash
+   ./font_smoothing.sh # this will make the font look sharper and smoother
+   ```
+
 ### Configuration Management
 
 Most user configurations can be found in:
