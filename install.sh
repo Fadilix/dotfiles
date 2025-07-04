@@ -29,6 +29,7 @@ folders=(
   "rofi"
   "swaync"
   "waybar"
+  "tmux"
 )
 
 # AUR packages
@@ -43,6 +44,7 @@ packages_to_install=(
   "zoxide"
   "fzf"
   "cmatrix"
+  "tmux"
 )
 
 error_exit() {
@@ -56,10 +58,10 @@ show_progress() {
   local total=$2
   local percentage=$((current * 100 / total))
   local dots=$((current * 20 / total))
-  
+
   printf "\r${CYAN}Progress: ["
-  for ((i=0; i<dots; i++)); do printf "#"; done
-  for ((i=dots; i<20; i++)); do printf "."; done
+  for ((i = 0; i < dots; i++)); do printf "#"; done
+  for ((i = dots; i < 20; i++)); do printf "."; done
   printf "] ${WHITE}%d%% ${DIM}(%d/%d)${RESET}" $percentage $current $total
 }
 
@@ -84,14 +86,14 @@ print_info() {
 
 backup() {
   print_header "Backing Up Configuration"
-  
+
   local total=${#folders[@]}
   local current=0
-  
+
   for folder in "${folders[@]}"; do
     current=$((current + 1))
     show_progress $current $total
-    
+
     if [ -d "$HOME/.config/$folder" ]; then
       mkdir -p "$HOME/backup"
       cp -r "$HOME/.config/$folder" "$HOME/backup/" || error_exit "Failed to backup $folder"
@@ -115,14 +117,14 @@ backup() {
 
 copy_folders() {
   print_header "Installing Configurations"
-  
+
   local total=${#folders[@]}
   local current=0
-  
+
   for folder in "${folders[@]}"; do
     current=$((current + 1))
     show_progress $current $total
-    
+
     if [ -d "$PWD/$folder" ]; then
       mkdir -p "$HOME/.config/$folder"
       cp -r "$PWD/$folder/." "$HOME/.config/$folder/" || error_exit "Failed to install $folder"
@@ -138,11 +140,11 @@ copy_folders() {
   if [ -f "$PWD/.zshrc" ]; then
     # Remove existing .zshrc if it exists
     [ -f "$HOME/.zshrc" ] && rm "$HOME/.zshrc"
-    
+
     # Copy the zshrc from dotfiles to user's home directory
     cp "$PWD/.zshrc" "$HOME/.zshrc" || error_exit "Failed to install .zshrc"
     print_success "Installed .zshrc"
-    
+
     # Source the new .zshrc
     print_info "Sourcing .zshrc..."
     source "$HOME/.zshrc" || print_warning "Failed to source .zshrc (this is normal in some cases)"
@@ -169,7 +171,7 @@ install_packages() {
   for package in "${packages_to_install[@]}"; do
     current=$((current + 1))
     show_progress $current $total
-    
+
     if yay -Qq "$package" &>/dev/null; then
       echo -e "\n${YELLOW}! $package already installed${RESET}"
       skipped=$((skipped + 1))
@@ -184,13 +186,13 @@ install_packages() {
     fi
     sleep 0.1
   done
-  
+
   echo -e "\n${CYAN}${INFO} Summary: ${GREEN}$installed installed${RESET}, ${YELLOW}$skipped skipped${RESET}"
 }
 
 main() {
   clear
-  
+
   echo -e "${BOLD}${PURPLE}"
   echo "==========================================="
   echo "    Fadilix Hyprland Configuration Installer"
@@ -203,7 +205,7 @@ main() {
   for folder in "${folders[@]}"; do
     echo -e "  ${CYAN}${ARROW}${RESET} $folder"
   done
-  
+
   echo -e "\n${BOLD}${WHITE}Packages to install (${#packages_to_install[@]} total):${RESET}"
   for package in "${packages_to_install[@]}"; do
     echo -e "  ${CYAN}${ARROW}${RESET} $package"
@@ -213,7 +215,7 @@ main() {
   echo -e "${WHITE}Continue? ${DIM}(y/N):${RESET} "
   read -n 1 -r
   echo
-  
+
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     echo -e "${YELLOW}Installation cancelled${RESET}"
     exit 0

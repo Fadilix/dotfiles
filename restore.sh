@@ -29,6 +29,7 @@ folders=(
   "rofi"
   "swaync"
   "waybar"
+  "tmux"
 )
 
 error_exit() {
@@ -42,10 +43,10 @@ show_progress() {
   local total=$2
   local percentage=$((current * 100 / total))
   local dots=$((current * 20 / total))
-  
+
   printf "\r${CYAN}Progress: ["
-  for ((i=0; i<dots; i++)); do printf "#"; done
-  for ((i=dots; i<20; i++)); do printf "."; done
+  for ((i = 0; i < dots; i++)); do printf "#"; done
+  for ((i = dots; i < 20; i++)); do printf "."; done
   printf "] ${WHITE}%d%% ${DIM}(%d/%d)${RESET}" $percentage $current $total
 }
 
@@ -70,16 +71,16 @@ print_info() {
 
 restore_configs() {
   print_header "Restoring Configuration Files"
-  
+
   local total=${#folders[@]}
   local current=0
   local restored=0
   local skipped=0
-  
+
   for folder in "${folders[@]}"; do
     current=$((current + 1))
     show_progress $current $total
-    
+
     if [ -d "$HOME/backup/$folder" ]; then
       cp -r "$HOME/backup/$folder" "$HOME/.config/" || error_exit "Failed to restore $folder"
       echo -e "\n${GREEN}${CHECK} Restored: $folder${RESET}"
@@ -101,13 +102,13 @@ restore_configs() {
     print_warning ".zshrc backup not found, skipping"
     skipped=$((skipped + 1))
   fi
-  
+
   echo -e "\n${CYAN}${INFO} Summary: ${GREEN}$restored restored${RESET}, ${YELLOW}$skipped skipped${RESET}"
 }
 
 main() {
   clear
-  
+
   echo -e "${BOLD}${PURPLE}"
   echo "==========================================="
   echo "    Fadilix Hyprland Configuration Restore"
@@ -136,7 +137,7 @@ main() {
   echo -e "${WHITE}Continue? ${DIM}(y/N):${RESET} "
   read -n 1 -r
   echo
-  
+
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     echo -e "${YELLOW}Restore cancelled${RESET}"
     exit 0
@@ -155,3 +156,4 @@ main() {
 }
 
 main
+
