@@ -111,13 +111,6 @@ If you encounter issues:
 2. Review the original [JaKooLit repository](https://github.com/JaKooLit) for additional documentation
 3. Open a new issue with detailed information about your problem
 
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
-- Share your customizations
 
 ## 🌟 Acknowledgments
 
