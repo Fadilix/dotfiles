@@ -6,7 +6,10 @@ export ZSH="$HOME/.oh-my-zsh"
 
 
 # my aliases
-# alias vim=nvim
+alias vim=nvim
+alias code=code --disable-gpu
+alias cursor=cursor --disable-gpu
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -122,6 +125,7 @@ export NVM_DIR="$HOME/.nvm"
 # source <(ng completion script)
 # neofetch --ascii_distro archlinux
 fastfetch --logo archlinux
+
 # shellcheck shell=bash
 
 # =============================================================================
@@ -271,12 +275,3 @@ fi
 # To initialize zoxide, add this to your shell configuration file (usually ~/.zshrc):
 #
 # eval "$(zoxide init zsh)"
-
-# Configuring fzf-git script 
-
-eval "$(fzf --zsh)"
-
-
-export ELECTRON_OZONE_PLATFORM_HINT=auto
-export ELECTRON_DISABLE_GPU=1
-
