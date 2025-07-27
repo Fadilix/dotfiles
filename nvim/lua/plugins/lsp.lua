@@ -18,6 +18,13 @@ return {
       })
     end,
   },
+  {
+    "github/copilot.vim",
+    config = function()
+      -- Optional: trigger on InsertEnter
+      -- vim.cmd("Copilot setup")
+    end,
+  },
 
   {
     "jose-elias-alvarez/null-ls.nvim",
@@ -33,7 +40,6 @@ return {
       }
     end,
   },
-
   -- LSP servers configuration
   {
     "neovim/nvim-lspconfig",

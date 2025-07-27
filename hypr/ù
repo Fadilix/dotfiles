@@ -12,7 +12,7 @@ background {
     # The girl that covered her eyes with her hands
     # path = $HOME/Pictures/wallpapers/Arch-chan_to.png
     path = screenshot # to dynamically parse the wallpaper as the wallpaper
-    #color = $background
+  #color = $background
     blur_passes = 2
     contrast = 1
     brightness = 0.5
@@ -22,15 +22,11 @@ background {
 
 # GENERAL
 general {
-    grace = 0
+    grace = 1
     fractional_scaling = 2
     immediate_render = true
     hide_cursor = true
-    no_fade_in = true
-    no_fade_out = true
 }
-
-# GENERAL what i had before
 # general {
 #     no_fade_in = true
 #     no_fade_out = true
