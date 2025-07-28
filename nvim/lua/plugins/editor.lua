@@ -1,13 +1,49 @@
 return {
-  -- Highlight colors
   {
-    "echasnovski/mini.hipatterns",
-    event = "BufReadPre",
-    opts = {},
+    enabled = false,
+    "folke/flash.nvim",
+    ---@type Flash.Config
+    opts = {
+      search = {
+        forward = true,
+        multi_window = false,
+        wrap = false,
+        incremental = true,
+      },
+    },
   },
+
+  {
+    "brenoprata10/nvim-highlight-colors",
+    event = "BufReadPre",
+    opts = {
+      render = "background",
+      enable_hex = true,
+      enable_short_hex = true,
+      enable_rgb = true,
+      enable_hsl = true,
+      enable_hsl_without_function = true,
+      enable_ansi = true,
+      enable_var_usage = true,
+      enable_tailwind = true,
+    },
+  },
+
+  {
+    "dinhhuy258/git.nvim",
+    event = "BufReadPre",
+    opts = {
+      keymaps = {
+        -- Open blame window
+        blame = "<Leader>gb",
+        -- Open file/folder in git repository
+        browse = "<Leader>go",
+      },
+    },
+  },
+
   {
     "nvim-telescope/telescope.nvim",
-    priority = 1000,
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -17,9 +53,19 @@ return {
     },
     keys = {
       {
-        ";f",
+        "<leader>fP",
         function()
           require("telescope.builtin").find_files({
+            cwd = require("lazy.core.config").options.root,
+          })
+        end,
+        desc = "Find Plugin File",
+      },
+      {
+        ";f",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.find_files({
             no_ignore = false,
             hidden = true,
           })
@@ -29,7 +75,10 @@ return {
       {
         ";r",
         function()
-          require("telescope.builtin").live_grep()
+          local builtin = require("telescope.builtin")
+          builtin.live_grep({
+            additional_args = { "--hidden" },
+          })
         end,
         desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
       },
@@ -40,6 +89,14 @@ return {
           builtin.buffers()
         end,
         desc = "Lists open buffers",
+      },
+      {
+        ";t",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.help_tags()
+        end,
+        desc = "Lists available help tags and opens a new window with the relevant help info on <cr>",
       },
       {
         ";;",
@@ -66,6 +123,14 @@ return {
         desc = "Lists Function names, variables, from Treesitter",
       },
       {
+        ";c",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.lsp_incoming_calls()
+        end,
+        desc = "Lists LSP incoming calls for word under the cursor",
+      },
+      {
         "sf",
         function()
           local telescope = require("telescope")
@@ -87,45 +152,101 @@ return {
         end,
         desc = "Open File Browser with the path of the current buffer",
       },
-
-      -- Additional key mappings as in your original config
     },
     config = function(_, opts)
       local telescope = require("telescope")
       local actions = require("telescope.actions")
       local fb_actions = require("telescope").extensions.file_browser.actions
 
-      opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
+      opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
         wrap_results = true,
         layout_strategy = "horizontal",
         layout_config = { prompt_position = "top" },
         sorting_strategy = "ascending",
         winblend = 0,
+        mappings = {
+          n = {},
+        },
       })
-
       opts.pickers = {
         diagnostics = {
           theme = "ivy",
           initial_mode = "normal",
+          layout_config = {
+            preview_cutoff = 9999,
+          },
         },
       }
-
       opts.extensions = {
         file_browser = {
           theme = "dropdown",
+          -- disables netrw and use telescope-file-browser in its place
           hijack_netrw = true,
           mappings = {
-            n = {
+            -- your custom insert mode mappings
+            ["n"] = {
+              -- your custom normal mode mappings
               ["N"] = fb_actions.create,
               ["h"] = fb_actions.goto_parent_dir,
+              ["/"] = function()
+                vim.cmd("startinsert")
+              end,
+              ["<C-u>"] = function(prompt_bufnr)
+                for i = 1, 10 do
+                  actions.move_selection_previous(prompt_bufnr)
+                end
+              end,
+              ["<C-d>"] = function(prompt_bufnr)
+                for i = 1, 10 do
+                  actions.move_selection_next(prompt_bufnr)
+                end
+              end,
+              ["<PageUp>"] = actions.preview_scrolling_up,
+              ["<PageDown>"] = actions.preview_scrolling_down,
             },
           },
         },
       }
-
       telescope.setup(opts)
-      telescope.load_extension("fzf")
-      telescope.load_extension("file_browser")
+      require("telescope").load_extension("fzf")
+      require("telescope").load_extension("file_browser")
     end,
+  },
+
+  {
+    "kazhala/close-buffers.nvim",
+    event = "VeryLazy",
+    keys = {
+      {
+        "<leader>th",
+        function()
+          require("close_buffers").delete({ type = "hidden" })
+        end,
+        "Close Hidden Buffers",
+      },
+      {
+        "<leader>tu",
+        function()
+          require("close_buffers").delete({ type = "nameless" })
+        end,
+        "Close Nameless Buffers",
+      },
+    },
+  },
+
+  {
+    "saghen/blink.cmp",
+    opts = {
+      completion = {
+        menu = {
+          winblend = vim.o.pumblend,
+        },
+      },
+      signature = {
+        window = {
+          winblend = vim.o.pumblend,
+        },
+      },
+    },
   },
 }

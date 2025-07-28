@@ -1,30 +1,23 @@
--- Hyprland LSP configuration
-vim.api.nvim_create_augroup("hyprland_lsp", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-  group = "hyprland_lsp",
-  pattern = { "*.hl", "hypr*.conf", "*.hypr" },
-  callback = function(event)
-    -- Check if hyprls is available in PATH
-    local has_hyprls = vim.fn.executable("hyprls") == 1
-    
-    -- If not in PATH, check Go bin directory
-    local go_hyprls = vim.fn.expand("$HOME/go/bin/hyprls")
-    local has_go_hyprls = vim.fn.executable(go_hyprls) == 1
-    
-    if has_hyprls then
-      vim.lsp.start({
-        name = "hyprlang",
-        cmd = { "hyprls" },
-        root_dir = vim.fn.getcwd(),
-      })
-    elseif has_go_hyprls then
-      vim.lsp.start({
-        name = "hyprlang",
-        cmd = { go_hyprls },
-        root_dir = vim.fn.getcwd(),
-      })
-    else
-      vim.notify("hyprls not found. Install it with 'go install github.com/hyprland-community/hyprls/cmd/hyprls@latest'", vim.log.levels.WARN)
-    end
+-- Autocmds are automatically loaded on the VeryLazy event
+-- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
+--
+-- Add any additional autocmds here
+-- with `vim.api.nvim_create_autocmd`
+--
+-- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
+-- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
+-- turn off paste mode when leaving insert
+vim.api.nvim_create_autocmd("InsertLeave", {
+  pattern = "*",
+  command = "set nopaste",
+})
+
+-- Fix conceallevel for json files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "json", "jsonc" },
+  callback = function()
+    vim.wo.spell = false
+    vim.wo.conceallevel = 0
   end,
 })

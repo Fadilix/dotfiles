@@ -1,14 +1,12 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.ai.copilot",
-    "lazyvim.plugins.extras.coding.mini-surround",
+    "lazyvim.plugins.extras.ai.supermaven",
     "lazyvim.plugins.extras.lang.markdown",
-    "lazyvim.plugins.extras.util.startuptime",
-    "lazyvim.plugins.extras.vscode"
+    "lazyvim.plugins.extras.lang.toml"
   ],
+  "install_version": 8,
   "news": {
-    "NEWS.md": "10960",
-    "doc/news.txt": "25127"
+    "NEWS.md": "10960"
   },
-  "version": 7
+  "version": 8
 }

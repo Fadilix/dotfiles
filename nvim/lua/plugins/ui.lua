@@ -1,5 +1,5 @@
 return {
-  -- Noice plugin configuration (for messages, cmdline, and popup menu)
+  -- messages, cmdline and the popupmenu
   {
     "folke/noice.nvim",
     opts = function(_, opts)
@@ -33,27 +33,42 @@ return {
 
       opts.commands = {
         all = {
+          -- options for the message history that you get with `:Noice`
           view = "split",
           opts = { enter = true, format = "details" },
           filter = {},
         },
       }
 
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "markdown",
+        callback = function(event)
+          vim.schedule(function()
+            require("noice.text.markdown").keys(event.buf)
+          end)
+        end,
+      })
+
       opts.presets.lsp_doc_border = true
     end,
   },
 
-  -- Notification setup
   {
     "rcarriga/nvim-notify",
     opts = {
       timeout = 5000,
-      background_colour = "#000000",
-      render = "wrapped-compact",
     },
   },
 
-  -- Bufferline plugin for buffer management
+  {
+    "snacks.nvim",
+    opts = {
+      scroll = { enabled = false },
+    },
+    keys = {},
+  },
+
+  -- buffer line
   {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
@@ -64,197 +79,99 @@ return {
     opts = {
       options = {
         mode = "tabs",
+        -- separator_style = "slant",
         show_buffer_close_icons = false,
         show_close_icon = false,
       },
     },
   },
 
-  -- File name display with Incline plugin
+  -- filename
   {
     "b0o/incline.nvim",
-    dependencies = {},
+    dependencies = { "craftzdog/solarized-osaka.nvim" },
     event = "BufReadPre",
     priority = 1200,
     config = function()
-      local helpers = require("incline.helpers")
+      local colors = require("solarized-osaka.colors").setup()
       require("incline").setup({
-        window = {
-          padding = 0,
-          margin = { horizontal = 0 },
+        highlight = {
+          groups = {
+            InclineNormal = { guibg = colors.magenta500, guifg = colors.base04 },
+            InclineNormalNC = { guifg = colors.violet500, guibg = colors.base03 },
+          },
+        },
+        window = { margin = { vertical = 0, horizontal = 1 } },
+        hide = {
+          cursorline = true,
         },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-          local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-          local modified = vim.bo[props.buf].modified
-          local buffer = {
-            ft_icon and { " ", ft_icon, " ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or "",
-            " ",
-            { filename, gui = modified and "bold,italic" or "bold" },
-            " ",
-            guibg = "#363944",
-          }
-          return buffer
-        end,
-      })
-    end,
-  },
-
-  -- LazyGit integration with Telescope
-  {
-    "kdheepak/lazygit.nvim",
-    keys = {
-      {
-        ";c",
-        ":LazyGit<Return>",
-        silent = true,
-        noremap = true,
-      },
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-  },
-
-  -- Setup for Harpoo by ThePrimeAgen
-  {
-    "ThePrimeagen/harpoon",
-    config = function()
-      require("harpoon").setup({})
-    end,
-    keys = {
-      {
-        "<leader>a",
-        function()
-          require("harpoon.mark").add_file()
-        end,
-        desc = "Add file to Harpoon",
-      },
-      {
-        "<leader>h",
-        function()
-          require("harpoon.ui").toggle_quick_menu()
-        end,
-        desc = "Toggle Harpoon Menu",
-      },
-      {
-        "<leader>&",
-        function()
-          require("harpoon.ui").nav_file(1)
-        end,
-        desc = "Go to Harpoon File 1",
-      },
-      {
-        "<leader>2",
-        function()
-          require("harpoon.ui").nav_file(2)
-        end,
-        desc = "Go to Harpoon File 2",
-      },
-      {
-        "<leader>3",
-        function()
-          require("harpoon.ui").nav_file(3)
-        end,
-        desc = "Go to Harpoon File 3",
-      },
-      {
-        "<leader>4",
-        function()
-          require("harpoon.ui").nav_file(4)
-        end,
-        desc = "Go to Harpoon File 4",
-      },
-    },
-  },
-
-  -- Database UI integration
-  {
-    "kristijanhusak/vim-dadbod-ui",
-    dependencies = {
-      { "tpope/vim-dadbod", lazy = true },
-      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
-    },
-    cmd = {
-      "DBUI",
-      "DBUIToggle",
-      "DBUIAddConnection",
-      "DBUIFindBuffer",
-    },
-    init = function()
-      vim.g.db_ui_use_nerd_fonts = 1
-    end,
-    keys = {
-      {
-        "<leader>d",
-        "<cmd>NvimTreeClose<cr><cmd>tabnew<cr><bar><bar><cmd>DBUI<cr>",
-      },
-    },
-  },
-
-  -- Nvim Tree plugin configuration
-  {
-    "nvim-tree/nvim-tree.lua",
-    config = function()
-      require("nvim-tree").setup({
-        on_attach = function(bufnr)
-          local api = require("nvim-tree.api")
-
-          local function opts(desc)
-            return {
-              desc = "nvim-tree: " .. desc,
-              buffer = bufnr,
-              noremap = true,
-              silent = true,
-              nowait = true,
-            }
+          if vim.bo[props.buf].modified then
+            filename = "[+] " .. filename
           end
 
-          -- default mappings
-          api.config.mappings.default_on_attach(bufnr)
-
-          -- custom mappings
-          vim.keymap.set("n", "t", api.node.open.tab, opts("Tab"))
+          local icon, color = require("nvim-web-devicons").get_icon_color(filename)
+          return { { icon, guifg = color }, { " " }, { filename } }
         end,
-        actions = {
-          open_file = {
-            quit_on_open = true,
-          },
-        },
-        sort = {
-          sorter = "case_sensitive",
-        },
-        view = {
-          width = 30,
-          relativenumber = true,
-        },
-        renderer = {
-          group_empty = true,
-        },
-        filters = {
-          dotfiles = true,
-          custom = {
-            "node_modules/.*",
-          },
-        },
-        log = {
-          enable = true,
-          truncate = true,
-          types = {
-            diagnostics = true,
-            git = true,
-            profile = true,
-            watcher = true,
-          },
-        },
       })
-
-      -- Prevent `nvim-tree` from opening automatically if no arguments are passed.
-      -- This allows the dashboard to show up instead.
-      if vim.fn.argc(-1) == 0 then
-        -- Comment this out if you want the tree to open on startup
-        -- vim.cmd("NvimTreeFocus")
-      end
     end,
+  },
+
+  -- statusline
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = function(_, opts)
+      local LazyVim = require("lazyvim.util")
+      opts.sections.lualine_c[4] = {
+        LazyVim.lualine.pretty_path({
+          length = 0,
+          relative = "cwd",
+          modified_hl = "MatchParen",
+          directory_hl = "",
+          filename_hl = "Bold",
+          modified_sign = "",
+          readonly_icon = " 󰌾 ",
+        }),
+      }
+    end,
+  },
+
+  {
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    opts = {
+      plugins = {
+        gitsigns = true,
+        tmux = true,
+        kitty = { enabled = false, font = "+2" },
+      },
+    },
+    keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
+  },
+
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    enabled = false,
+  },
+
+  {
+    "folke/snacks.nvim",
+    opts = {
+      dashboard = {
+        preset = {
+          header = [[
+                                                                             
+               ████ ██████           █████      ██                     
+              ███████████             █████                             
+              █████████ ███████████████████ ███   ███████████   
+             █████████  ███    █████████████ █████ ██████████████   
+            █████████ ██████████ █████████ █████ █████ ████ █████   
+          ███████████ ███    ███ █████████ █████ █████ ████ █████  
+         ██████  █████████████████████ ████ █████ █████ ████ ██████ 
+      ]],
+        },
+      },
+    },
   },
 }
