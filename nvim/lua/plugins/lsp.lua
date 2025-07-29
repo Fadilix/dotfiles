@@ -24,7 +24,7 @@ return {
         "javascript",
         "css",
         "html",
-        "prisma", -- add Prisma here
+        "prisma",
       },
       highlight = {
         enable = true,
