@@ -5,7 +5,7 @@
 ![Hyprland Desktop Preview](https://github.com/user-attachments/assets/2e9e4f0a-e1d2-4e95-8371-1e8859d48257)
 ##
 ![image](./screenshots/rofi.png)
-##
+## 
 ![Neovim](https://github.com/user-attachments/assets/1ce650b2-9e54-4f30-959a-778eaabe8939)
 ##
 ![image](./screenshots/fastfetch_cmatrix.png)
