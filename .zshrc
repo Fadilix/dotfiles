@@ -11,6 +11,7 @@ alias code=code --disable-gpu
 alias cursor=cursor --disable-gpu
 
 
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -124,7 +125,7 @@ export NVM_DIR="$HOME/.nvm"
 # Load Angular CLI autocompletion.
 # source <(ng completion script)
 # neofetch --ascii_distro archlinux
-fastfetch --logo archlinux
+# fastfetch --logo archlinux
 
 # shellcheck shell=bash
 
