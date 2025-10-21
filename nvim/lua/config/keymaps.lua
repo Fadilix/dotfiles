@@ -9,6 +9,7 @@ local opts = { noremap = true, silent = true }
 -- discipline.cowboy()
 
 keymap.set("n", "+", "<C-a>")
+
 keymap.set("n", "-", "<C-x>")
 
 -- delete a word backwards
