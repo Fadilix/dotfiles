@@ -93,10 +93,43 @@ Multiple theme options are available. Use the quick settings menu to:
 - Modify Kitty terminal themes
 - Adjust monitor profiles
 
+### Remap the copilot key to CTRL
+To do this i used keyd
+
+```
+yay -S keyd
+
+```
+And to use it, it is very simple. You have to create this file 
+
+```
+sudo vim /etc/keyd/default.conf
+
+```
+Paste this code in to remap the copilot key to rightcontrol
+
+```[ids]
+
+*
+
+[main]
+
+# Maps the windows copilot key to rightcontrol
+leftshift+leftmeta+f23 = rightcontrol
+~
+
+```
+And then you have to reload the keyd and enable its service  
+```
+sudo keyd reload
+sudo systemctl enable keyd && sudo systemctl start keyd
+
+```
+
 ### Adding Your Own Scripts
+
 Place custom scripts in `~/.config/hypr/UserScripts/` and they'll be integrated into the system.
 
-## 🔧 Troubleshooting
 
 ### Common Issues
 
