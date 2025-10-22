@@ -1,49 +1,49 @@
- /* ---- 💫 https://github.com/Fadilix 💫 ---- */  
+ /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  
  /* wallust template - colors-rofi */
 
 * {
-active-background: #6243A3;
-active-foreground: #F9E4DF;
-normal-background: #131114;
-normal-foreground: #F9E4DF;
-urgent-background: #D16494;
-urgent-foreground: #F9E4DF;
+active-background: #784CA0;
+active-foreground: #FAE8E1;
+normal-background: #181519;
+normal-foreground: #FAE8E1;
+urgent-background: #CC659A;
+urgent-foreground: #FAE8E1;
 
-alternate-active-background: #723A43;
-alternate-active-foreground: #F9E4DF;
-alternate-normal-background: #131114;
-alternate-normal-foreground: #F9E4DF;
-alternate-urgent-background: #131114;
-alternate-urgent-foreground: #F9E4DF;
+alternate-active-background: #914B4B;
+alternate-active-foreground: #FAE8E1;
+alternate-normal-background: #181519;
+alternate-normal-foreground: #FAE8E1;
+alternate-urgent-background: #181519;
+alternate-urgent-foreground: #FAE8E1;
 
-selected-active-background: #D16494;
-selected-active-foreground: #F9E4DF;
-selected-normal-background: #D16494;
-selected-normal-foreground: #F9E4DF;
-selected-urgent-background: #6243A3;
-selected-urgent-foreground: #F9E4DF;
+selected-active-background: #CC659A;
+selected-active-foreground: #FAE8E1;
+selected-normal-background: #CC659A;
+selected-normal-foreground: #FAE8E1;
+selected-urgent-background: #784CA0;
+selected-urgent-foreground: #FAE8E1;
 
-background-color: #131114;
+background-color: #181519;
 background: rgba(0,0,0,0.7);
-foreground: #F9E4DF;
-border-color: #6243A3;
+foreground: #FAE8E1;
+border-color: #784CA0;
 
-color0: #3B393C;
-color1: #130A16;
-color2: #312871;
-color3: #552C32;
-color4: #4A327A;
-color5: #9D4B6F;
-color6: #B3857A;
-color7: #EFD0C9;
-color8: #A7918C;
-color9: #190D1D;
-color10: #413596;
-color11: #723A43;
-color12: #6243A3;
-color13: #D16494;
-color14: #EFB1A3;
-color15: #EFD0C9;
+color0: #3F3C40;
+color1: #1A1022;
+color2: #492E61;
+color3: #6D3838;
+color4: #5A3978;
+color5: #994C74;
+color6: #B58E80;
+color7: #F0D6CC;
+color8: #A8958F;
+color9: #23152D;
+color10: #613D81;
+color11: #914B4B;
+color12: #784CA0;
+color13: #CC659A;
+color14: #F2BDAA;
+color15: #F0D6CC;
 
 
 }
