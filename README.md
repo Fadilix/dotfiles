@@ -130,6 +130,14 @@ sudo systemctl enable keyd && sudo systemctl start keyd
 
 Place custom scripts in `~/.config/hypr/UserScripts/` and they'll be integrated into the system.
 
+### prevent pc to shutdown drectly when hitting on the powerbutton
+- Edit the `/etc/systemd/logind.conf` file and uncomment the line `#HandlePowerKey=powerOff` and change the `powerOff` to `ignore`
+- Restart the systemd login service 
+```bash
+sudo systemctl restart systemd-logind.service
+
+```
+- Reboot your pc.
 
 ### Common Issues
 
