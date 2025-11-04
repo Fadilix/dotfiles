@@ -41,10 +41,10 @@ case "$1" in
   get_backlight
   ;;
 "--inc")
-  change_backlight "+5%"
+  change_backlight "+3%"
   ;;
 "--dec")
-  change_backlight "5%-"
+  change_backlight "3%-"
   ;;
 *)
   get_backlight

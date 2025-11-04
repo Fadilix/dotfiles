@@ -9,6 +9,8 @@ export ZSH="$HOME/.oh-my-zsh"
 alias vim=nvim
 alias code=code --disable-gpu
 alias cursor=cursor --disable-gpu
+alias perf="sudo cpupower frequency-set -g performance"
+alias powsave="sudo cpupower frequency-set -g powersave"
 
 
 
