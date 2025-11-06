@@ -1,6 +1,6 @@
 /* -----------  -------- */
 /* ..........................................*/
-/* .......Purple Rice....................... */
+/* .......Purple-Cyberpunk....................... */
 /* ......................................... */
 /* --- 👍 designed by https://github.com/Fadilix  👍 --- */
 
@@ -14,8 +14,8 @@
 }
 
 window#waybar {
-  background: #11111b;
-  color: #cba6f7;
+  background: #000000;
+  color: #fc00fa;
 }
 
 window#waybar.hidden {
@@ -35,14 +35,14 @@ tooltip {
   border-width: 2px;
   border-style: solid;
   border-color: #11111b;
-  color: #cba6f7;
+  color: #fc00fa;
 }
 
 /*-----module groups----*/
 .modules-right {
-  border: 3px solid #11111b;
+  border: 3px solid #1e1e2e;
   border-radius: 10px 10px 10px 10px;
-  background-color: #313244;
+  background-color: #11111b;
   padding-top: 2px;
   padding-bottom: 2px;
   padding-right: 4px;
@@ -57,10 +57,9 @@ tooltip {
 }
 
 .modules-left {
-  /*background-color: #1e1e2e;*/
-  border: 3px solid #11111b;
+  border: 3px solid #1e1e2e;
   border-radius: 10px 10px 10px 10px;
-  background-color: #313244;
+  background-color: #11111b;
   padding-top: 2px;
   padding-bottom: 2px;
   padding-right: 4px;
@@ -83,7 +82,7 @@ tooltip {
 #workspaces button.active {
   color: #1e1e1e;
   border-radius: 30%;
-  background-color: #cba6f7;
+  background-color: #fc00fa;
   padding-left: 6px;
   padding-right: 8px;
   animation: gradient_f 20s ease-in infinite;
@@ -93,7 +92,7 @@ tooltip {
 #workspaces button.active:hover {
   color: #1e1e1e;
   border-radius: 30%;
-  background-color: #cba6f7;
+  background-color: #fc00fa;
   padding-left: 6px;
   padding-right: 8px;
 }
@@ -104,7 +103,7 @@ tooltip {
 
 #workspaces button.urgent {
   border-radius: 30%;
-  background-color: #cba6f7;
+  background-color: #fc00fa;
   color: #1e1e1e;
 }
 
@@ -112,7 +111,7 @@ tooltip {
 #workspaces button:hover {
   color: #1e1e1e;
   border: 3px solid #1e1e2e;
-  background-color: #cba6f7;
+  background-color: #fc00fa;
   border-radius: 30%;
   padding-left: 4px;
   padding-right: 4px;
