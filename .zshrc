@@ -3,12 +3,12 @@
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export GTK_THEME=Flat-Remix-GTK-Blue-Dark
+
 
 
 # my aliases
 alias vim=nvim
-alias code=code --disable-gpu
-alias cursor=cursor --disable-gpu
 alias perf="sudo cpupower frequency-set -g performance"
 alias powsave="sudo cpupower frequency-set -g powersave"
 

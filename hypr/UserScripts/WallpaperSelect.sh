@@ -1,5 +1,5 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/Fadilix 💫 ---- */ 
+# /* ---- 💫 https://github.com/Fadilix 💫 ---- */
 # This script for selecting wallpapers (SUPER W)
 
 # WALLPAPERS PATH
@@ -10,14 +10,14 @@ SCRIPTSDIR="$HOME/.config/hypr/scripts"
 focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
 
 # swww transition config
-FPS=60
+FPS=120
 TYPE="any"
 DURATION=2
 BEZIER=".43,1.19,1,.4"
 SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION"
 
 # Check if swaybg is running
-if pidof swaybg > /dev/null; then
+if pidof swaybg >/dev/null; then
   pkill swaybg
 fi
 
@@ -28,7 +28,6 @@ RANDOM_PIC_NAME=". random"
 
 # Rofi command
 rofi_command="rofi -i -show -dmenu -config ~/.config/rofi/config-wallpaper.rasi"
-
 
 # Sorting Wallpapers
 menu() {
@@ -83,7 +82,7 @@ main() {
 }
 
 # Check if rofi is already running
-if pidof rofi > /dev/null; then
+if pidof rofi >/dev/null; then
   pkill rofi
   exit 0
 fi
