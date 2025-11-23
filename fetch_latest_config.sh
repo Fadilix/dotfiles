@@ -29,6 +29,7 @@ folders=(
   "rofi"
   "swaync"
   "waybar"
+  "tmux"
 )
 
 error_exit() {
@@ -42,10 +43,10 @@ show_progress() {
   local total=$2
   local percentage=$((current * 100 / total))
   local dots=$((current * 20 / total))
-  
+
   printf "\r${CYAN}Progress: ["
-  for ((i=0; i<dots; i++)); do printf "#"; done
-  for ((i=dots; i<20; i++)); do printf "."; done
+  for ((i = 0; i < dots; i++)); do printf "#"; done
+  for ((i = dots; i < 20; i++)); do printf "."; done
   printf "] ${WHITE}%d%% ${DIM}(%d/%d)${RESET}" $percentage $current $total
 }
 
@@ -70,22 +71,22 @@ print_info() {
 
 fetch_configs() {
   print_header "Fetching Latest Configurations"
-  
+
   local total=${#folders[@]}
   local current=0
   local fetched=0
   local skipped=0
-  
+
   for folder in "${folders[@]}"; do
     current=$((current + 1))
     show_progress $current $total
-    
+
     if [ -d "$HOME/.config/$folder" ]; then
       # Remove existing folder in repo if it exists
       if [ -d "$PWD/$folder" ]; then
         rm -rf "$PWD/$folder" || error_exit "Failed to remove old $folder"
       fi
-      
+
       # Copy latest config from ~/.config
       cp -r "$HOME/.config/$folder" "$PWD/" || error_exit "Failed to fetch $folder"
       cp "$HOME/.zshrc" "$PWD/"
@@ -97,13 +98,13 @@ fetch_configs() {
     fi
     sleep 0.1
   done
-  
+
   echo -e "\n${CYAN}${INFO} Summary: ${GREEN}$fetched fetched${RESET}, ${YELLOW}$skipped skipped${RESET}"
 }
 
 main() {
   clear
-  
+
   echo -e "${BOLD}${PURPLE}"
   echo "==========================================="
   echo "    Fadilix Configuration Fetcher"
@@ -125,7 +126,7 @@ main() {
   echo -e "${WHITE}Continue? ${DIM}(y/N):${RESET} "
   read -n 1 -r
   echo
-  
+
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     echo -e "${YELLOW}Fetch cancelled${RESET}"
     exit 0
@@ -144,3 +145,4 @@ main() {
 }
 
 main
+
