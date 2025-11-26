@@ -13,6 +13,8 @@ const packages = [
   "more",
   "less",
 
+  "downgrade",
+
   // hyprland plugins
   "hyprsunset",
   "pyprland",
