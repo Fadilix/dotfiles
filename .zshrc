@@ -6,11 +6,12 @@ export ZSH="$HOME/.oh-my-zsh"
 export GTK_THEME=Flat-Remix-GTK-Blue-Dark
 
 
-
 # my aliases
 alias vim=nvim
 alias perf="sudo cpupower frequency-set -g performance"
 alias powsave="sudo cpupower frequency-set -g powersave"
+alias idea="/home/fadilix/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea"
+alias logisim="/opt/logisim-evolution/bin/logisim-evolution"
 
 
 
@@ -286,3 +287,5 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+export PATH="/home/fadilix/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/home/fadilix/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"

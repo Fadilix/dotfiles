@@ -11,6 +11,7 @@ return {
         "typescript-language-server",
         "css-lsp",
         "prisma-language-server",
+
       })
     end,
   },

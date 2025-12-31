@@ -20,3 +20,6 @@ command = "[term_classed] main-dropterm"
 class = "main-dropterm"
 size = "75% 60%"
 max_size = "1920px 100%"
+margin = 50
+lazy = true
+pinned = false
