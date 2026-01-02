@@ -85,6 +85,10 @@ return {
         build = "make",
       },
       "nvim-telescope/telescope-file-browser.nvim",
+      {
+        "nvim-tree/nvim-web-devicons", -- TODO: #1
+        opts = { default = true },
+      },
     },
 
     opts = {
@@ -228,6 +232,7 @@ return {
           theme = "dropdown",
           -- disables netrw and use telescope-file-browser in its place
           hijack_netrw = true,
+
           mappings = {
             -- your custom insert mode mappings
             ["n"] = {
