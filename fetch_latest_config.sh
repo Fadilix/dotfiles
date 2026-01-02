@@ -30,6 +30,7 @@ folders=(
   "swaync"
   "waybar"
   "tmux"
+  "yazi",
 )
 
 error_exit() {
@@ -145,4 +146,3 @@ main() {
 }
 
 main
-
