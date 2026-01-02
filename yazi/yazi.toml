@@ -1,0 +1,4 @@
+[opener]
+edit = [
+	{ run = "$EDITOR %s", block = true, for = "unix" },
+]
