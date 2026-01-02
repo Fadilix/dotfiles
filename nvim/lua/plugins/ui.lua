@@ -158,6 +158,10 @@ return {
   {
     "folke/snacks.nvim",
     opts = {
+      lazygit = {
+        -- enabled = true,
+        configure = true,
+      },
       dashboard = {
         preset = {
           header = [[
@@ -171,6 +175,29 @@ return {
          ██████  █████████████████████ ████ █████ █████ ████ ██████ 
       ]],
         },
+      },
+    },
+    keys = {
+      {
+        "<Leader>gg",
+        function()
+          Snacks.lazygit()
+        end,
+        desc = "LazyGit",
+      },
+      {
+        "<Leader>gl",
+        function()
+          Snacks.lazygit.log()
+        end,
+        desc = "LazyGit Log",
+      },
+      {
+        "<Leader>gB",
+        function()
+          Snacks.gitbrowse()
+        end,
+        desc = "LazyGit Browse",
       },
     },
   },

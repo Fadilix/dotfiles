@@ -12,6 +12,7 @@ alias perf="sudo cpupower frequency-set -g performance"
 alias powsave="sudo cpupower frequency-set -g powersave"
 alias idea="/home/fadilix/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea"
 alias logisim="/opt/logisim-evolution/bin/logisim-evolution"
+alias y=yazi
 
 
 
@@ -89,9 +90,66 @@ plugins=(
 	zsh-syntax-highlighting
 )
 
-source $ZSH/oh-my-zsh.sh
+# Define custom styles
+# Format: ZSH_HIGHLIGHT_STYLES[category]='fg=color'
 
-# User configuration
+source $ZSH/oh-my-zsh.sh
+# ==============================================================================
+# THE NOVA-VOID // HIGH-CONTRAST CELESTIAL RICE
+# ==============================================================================
+
+# --- 1. Syntax Highlighting (Vivid & Distinct) ---
+
+# Commands: Bright Comet Cyan (Clean, focused primary action)
+ZSH_HIGHLIGHT_STYLES[command]='fg=#89dceb,bold'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=#89dceb,bold'
+
+# Paths: Dust Rose Italic (Pulled directly from your nebula wallpaper)
+# Italicizing these separates them from the "solid" look of commands.
+ZSH_HIGHLIGHT_STYLES[path]='fg=#f5c2e7,italic'
+
+# Strings: Nova Gold (High visibility for code-like arguments)
+ZSH_HIGHLIGHT_STYLES[string]='fg=#f9e2af'
+
+# Errors: Pulsar Red (Deep and saturated, stands out against dark BG)
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#f38ba8,bold,underline'
+
+# Cursor: Solar Flare (Inverted Block for maximum focus)
+ZSH_HIGHLIGHT_STYLES[cursor]='bg=#f9e2af,fg=#11111b'
+
+# Comments: Deep Void Grey (Recedes into the background)
+ZSH_HIGHLIGHT_STYLES[comment]='fg=#585b70,italic'
+
+# Options/Flags: Lavender (Distinct from Cyan/Rose)
+ZSH_HIGHLIGHT_STYLES[arg0]='fg=#cba6f7'
+
+# Sudo: SYSTEM OVERRIDE (Inverted Mauve - Looks like a UI warning)
+# This makes it impossible to miss that you are in root mode.
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=#11111b,bg=#cba6f7,bold'
+
+# --- 2. Interactive UI (The "Telescope" Look) ---
+
+# Autosuggestions: Faint Comet Trail
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#45475a'
+
+# Completion Menu (The "Floating Window" effect)
+# Selection highlight: Lavender background with dark text (Matches your Neovim statusline)
+zstyle ':completion:*' menu select
+zstyle ':completion:*:default' list-colors "=(#b) #(*)=0=01;30;48;5;189" 
+
+# Customizing completion headers to match Neovim diagnostics
+zstyle ':completion:*:*:*:*:descriptions' format '%F{#585b70}── %d ──%f'
+zstyle ':completion:*:*:*:*:corrections' format '%F{#f38ba8} %d%f'
+zstyle ':completion:*:*:*:*:messages' format '%F{#89dceb} %d %f'
+
+# --- 3. LS_COLORS (Matching the Nebula) ---
+# Directories: Comet Cyan | Symlinks: Lavender | Executables: Rose
+export LS_COLORS="di=01;38;5;117:ln=01;38;5;147:ex=01;38;5;218:fi=00;38;5;252:"
+
+
+
+
+
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
