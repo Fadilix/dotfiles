@@ -11,24 +11,16 @@ fi
 # List of official Arch Linux repository packages
 PACMAN_PKGS=(
   base-devel
-  meson
-  ninja
-  pahole
   git
-  mercurial
   python
   nodejs
   go
   jdk-openjdk
   lua
-  luajit
   typescript
   pyenv
   python-pip
   python-build
-  python-installer
-  python-setuptools
-  python-wheel
   node-gyp
   npm
   vim
@@ -41,10 +33,6 @@ PACMAN_PKGS=(
   tree-sitter-vim
   tree-sitter-vimdoc
   texinfo
-  perl
-  perl-error
-  perl-timedate
-  perl-mailtools
   reflector
 )
 
