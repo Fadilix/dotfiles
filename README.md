@@ -1,6 +1,6 @@
 # ✨ My Hyprland Config ✨(Beta version)
 #### ⭐ If this helps you, please leave a star ⭐
-
+ 
 ## 
 ![Hyprland Desktop Preview](https://github.com/user-attachments/assets/2e9e4f0a-e1d2-4e95-8371-1e8859d48257)
 ##
