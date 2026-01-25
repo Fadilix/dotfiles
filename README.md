@@ -6,8 +6,6 @@
 ##
 ![image](./screenshots/rofi.png)
 ## 
-![Neovim](https://github.com/user-attachments/assets/1ce650b2-9e54-4f30-959a-778eaabe8939)
-##
 ![image](./screenshots/fastfetch_cmatrix.png)
 ##
 
