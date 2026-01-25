@@ -136,9 +136,86 @@ return {
         "\\\\",
         function()
           local builtin = require("telescope.builtin")
-          builtin.buffers()
+          builtin.buffers({
+            sort_mru = true,
+            sort_lastused = true,
+            initial_mode = "normal",
+          })
         end,
         desc = "Lists open buffers",
+      },
+      {
+        "<leader>a",
+        function()
+          local ok, _ = pcall(vim.cmd, "buffer #")
+          if not ok then
+            vim.notify("No alternate buffer", vim.log.levels.INFO)
+          end
+        end,
+        desc = "Switch to Alternate Buffer",
+      },
+      {
+        ";a",
+        function()
+          local builtin = require("telescope.builtin")
+          local actions = require("telescope.actions")
+          local state = require("telescope.actions.state")
+
+          -- Auto-confirm timer logic
+          local uv = vim.uv or vim.loop
+          local timer = uv.new_timer()
+          local confirm_delay = 700 -- ms to wait before auto-switching
+
+          local function start_auto_confirm(prompt_bufnr)
+            timer:stop()
+            timer:start(
+              confirm_delay,
+              0,
+              vim.schedule_wrap(function()
+                if vim.api.nvim_buf_is_valid(prompt_bufnr) then
+                  actions.select_default(prompt_bufnr)
+                end
+              end)
+            )
+          end
+
+          builtin.buffers({
+            sort_mru = true,
+            sort_lastused = true,
+            initial_mode = "normal",
+            ignore_current_buffer = true,
+            layout_config = { width = 0.7, height = 0.6 },
+            attach_mappings = function(prompt_bufnr, map)
+              -- Map 'a' to cycle next and reset timer
+              map({ "n", "i" }, "a", function()
+                actions.move_selection_next(prompt_bufnr)
+                start_auto_confirm(prompt_bufnr)
+              end)
+
+              -- Map 'A' to cycle previous and reset timer
+              map({ "n", "i" }, "A", function()
+                actions.move_selection_previous(prompt_bufnr)
+                start_auto_confirm(prompt_bufnr)
+              end)
+
+              -- If they manually hit Enter or Q, stop the timer
+              map({ "n", "i" }, "<CR>", function()
+                timer:stop()
+                actions.select_default(prompt_bufnr)
+              end)
+              map({ "n", "i" }, "q", function()
+                timer:stop()
+                actions.close(prompt_bufnr)
+              end)
+
+              -- Start the timer immediately upon opening
+              start_auto_confirm(prompt_bufnr)
+
+              return true
+            end,
+          })
+        end,
+        desc = "Switch Buffer (MRU List with Auto-Confirm)",
       },
       {
         ";t",
@@ -215,7 +292,15 @@ return {
         sorting_strategy = "ascending",
         winblend = 0,
         mappings = {
-          n = {},
+          n = {
+            [";a"] = actions.move_selection_next,
+            [";A"] = actions.move_selection_previous,
+            ["q"] = actions.close,
+          },
+          i = {
+            [";a"] = actions.move_selection_next,
+            [";A"] = actions.move_selection_previous,
+          },
         },
       })
       opts.pickers = {
@@ -298,6 +383,57 @@ return {
           winblend = vim.o.pumblend,
         },
       },
+      keymap = {
+        preset = "enter",
+        ["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "snippet_backward", "fallback" },
+      },
     },
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    ---@param opts cmp.ConfigSchema
+    opts = function(_, opts)
+      local has_words_before = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
+
+      local cmp = require("cmp")
+
+      -- Ensure mapping table exists and is a table
+      opts.mapping = opts.mapping or {}
+
+      opts.mapping = vim.tbl_extend("force", opts.mapping, {
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if not vim.bo.modifiable then
+            fallback()
+          elseif cmp.visible() then
+            cmp.confirm({ select = true })
+          elseif vim.snippet and vim.snippet.active({ direction = 1 }) then
+            vim.schedule(function()
+              vim.snippet.jump(1)
+            end)
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif vim.snippet and vim.snippet.active({ direction = -1 }) then
+            vim.schedule(function()
+              vim.snippet.jump(-1)
+            end)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+      })
+    end,
   },
 }

@@ -282,6 +282,7 @@ fi
 #
 # eval "$(zoxide init zsh)"
 
+export EDITOR="nvim"
 # pnpm
 export PNPM_HOME="/home/fadilix/.local/share/pnpm"
 case ":$PATH:" in

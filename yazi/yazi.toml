@@ -2,3 +2,6 @@
 edit = [
 	{ run = "$EDITOR %s", block = true, for = "unix" },
 ]
+play = [
+	{ run = "mpv %s", orphan = true, for = "unix" },
+]
