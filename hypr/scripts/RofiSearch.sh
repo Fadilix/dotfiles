@@ -4,7 +4,7 @@
 
 # Opens rofi in dmenu mod and waits for input. Then pushes the input to the query of the URL.
 
-rofi_config="$HOME/.config/rofi/config-search.rasi"
+rofi_config="$HOME/.config/rofi/stellar-search.rasi"
 
 # Kill Rofi if already running before execution
 if pgrep -x "rofi" >/dev/null; then

@@ -3,7 +3,7 @@
 # /* Calculator (using qalculate) and rofi */
 # /* Submitted by: https://github.com/JosephArmas */
 
-rofi_theme="$HOME/.config/rofi/config-calc.rasi"
+rofi_theme="$HOME/.config/rofi/stellar-calc.rasi"
 
 # Kill Rofi if already running before execution
 if pgrep -x "rofi" >/dev/null; then

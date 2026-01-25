@@ -6,7 +6,7 @@
 kitty_themes_DiR="$HOME/.config/kitty/kitty-themes" # Kitty Themes Directory
 kitty_config="$HOME/.config/kitty/kitty.conf"
 iDIR="$HOME/.config/swaync/images" # For notifications
-rofi_theme_for_this_script="$HOME/.config/rofi/config-kitty-theme.rasi"
+rofi_theme_for_this_script="$HOME/.config/rofi/stellar-kitty-theme.rasi"
 
 # --- Helper Functions ---
 notify_user() {

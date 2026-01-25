@@ -1,0 +1,22 @@
+/**
+ * Stellar Dark - Calc
+ **/
+
+@import "themes/stellar-colors.rasi"
+@import "themes/stellar-dark.rasi"
+
+window {
+    width: 300px;
+}
+
+mainbox {
+    children: [ "entry", "message" ];
+}
+
+listview {
+    enabled: false;
+}
+
+entry {
+    placeholder: "   Calculate";
+}

@@ -1,0 +1,12 @@
+/**
+ * Stellar Dark Colors
+ **/
+
+* {
+    bg:                          #0d0b12;
+    bg-alt:                      #16141a;
+    fg:                          #f8d8c8;
+    accent:                      #c07260;
+    accent-alt:                  #e8a282;
+    border-col:                  #c07260;
+}

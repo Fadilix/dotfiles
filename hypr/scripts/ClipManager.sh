@@ -11,7 +11,7 @@ while true; do
     rofi -i -dmenu \
       -kb-custom-1 "Control-Delete" \
       -kb-custom-2 "Alt-Delete" \
-      -config ~/.config/rofi/config-clipboard.rasi < <(cliphist list)
+      -config ~/.config/rofi/stellar-clipboard.rasi < <(cliphist list)
   )
 
   case "$?" in

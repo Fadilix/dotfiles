@@ -9,7 +9,7 @@ rofi_theme_dir="$HOME/.config/rofi/themes"
 rofi_config_file="$HOME/.config/rofi/config.rasi"
 SED=$(which sed)
 iDIR="$HOME/.config/swaync/images"
-rofi_theme="$HOME/.config/rofi/config-rofi-theme.rasi"
+rofi_theme="$HOME/.config/rofi/stellar-rofi-theme.rasi"
 
 # Function to display menu options
 menu() {

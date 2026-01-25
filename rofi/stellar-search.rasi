@@ -1,0 +1,27 @@
+/**
+ * Stellar Dark - Search
+ **/
+
+@import "themes/stellar-colors.rasi"
+@import "themes/stellar-dark.rasi"
+
+window {
+    width: 400px;
+    height: 100px;
+    location: north;
+    anchor: north;
+    y-offset: 50px;
+}
+
+mainbox {
+    children: [ "entry", "message" ];
+}
+
+listview {
+    enabled: false;
+}
+
+entry {
+    placeholder: " 󰄉  Google Search";
+    horizontal-align: 0.5;
+}

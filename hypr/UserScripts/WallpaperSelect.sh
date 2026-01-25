@@ -27,7 +27,7 @@ RANDOM_PIC="${PICS[$((RANDOM % ${#PICS[@]}))]}"
 RANDOM_PIC_NAME=". random"
 
 # Rofi command
-rofi_command="rofi -i -show -dmenu -config ~/.config/rofi/config-wallpaper.rasi"
+rofi_command="rofi -i -show -dmenu -config ~/.config/rofi/stellar-wallpaper.rasi"
 
 # Sorting Wallpapers
 menu() {

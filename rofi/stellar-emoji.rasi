@@ -1,0 +1,19 @@
+/**
+ * Stellar Dark - Emoji
+ **/
+
+@import "themes/stellar-colors.rasi"
+@import "themes/stellar-dark.rasi"
+
+window {
+    width: 350px;
+}
+
+entry {
+    placeholder: " 󰞅  Search Emoji";
+}
+
+listview {
+    columns: 1;
+    lines: 8;
+}

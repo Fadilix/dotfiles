@@ -14,7 +14,7 @@ fi
 keybinds_conf="$HOME/.config/hypr/configs/Keybinds.conf"
 user_keybinds_conf="$HOME/.config/hypr/UserConfigs/UserKeybinds.conf"
 laptop_conf="$HOME/.config/hypr/UserConfigs/Laptops.conf"
-rofi_theme="$HOME/.config/rofi/config-keybinds.rasi"
+rofi_theme="$HOME/.config/rofi/stellar-keybinds.rasi"
 msg='☣️ NOTE ☣️: Clicking with Mouse or Pressing ENTER will have NO function'
 
 # combine the contents of the keybinds files and filter for keybinds

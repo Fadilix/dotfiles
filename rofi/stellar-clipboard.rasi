@@ -1,0 +1,18 @@
+/**
+ * Stellar Dark - Clipboard
+ **/
+
+@import "themes/stellar-colors.rasi"
+@import "themes/stellar-dark.rasi"
+
+window {
+    width: 350px;
+}
+
+entry {
+    placeholder: " 󰅍  Search Clipboard";
+}
+
+listview {
+    lines: 10;
+}
