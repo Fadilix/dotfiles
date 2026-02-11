@@ -4,6 +4,10 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export GTK_THEME=Flat-Remix-GTK-Blue-Dark
+export PATH="$HOME/.local/share/nvim/mason/bin:$HOME/go/bin:$PATH"
+
+# config for gh dash extension
+export ENHANCE_THEME=catppuccin_mocha
 
 
 # my aliases
@@ -292,3 +296,4 @@ esac
 # pnpm end
 export PATH="/home/fadilix/.config/herd-lite/bin:$PATH"
 export PHP_INI_SCAN_DIR="/home/fadilix/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
+export PATH="$HOME/.local/share/nvim/mason/bin:$HOME/go/bin:$PATH"

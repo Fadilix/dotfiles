@@ -54,6 +54,10 @@ return {
           -- 5. Telescope (If you use it)
           TelescopeNormal = { bg = "none" },
           TelescopeBorder = { bg = "none" },
+
+          -- 6. Cursor Line - very subtle background tint
+          CursorLine = { bg = "#252530" },
+          CursorColumn = { bg = "#252530" },
         }
       end,
     },

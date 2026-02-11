@@ -3,6 +3,7 @@
 -- Add any additional options here
 
 vim.opt.mouse = ""
+vim.opt.cursorline = true
 
 -- Enabling undercurl (TODO: i'll fix this later. The undercurl is not working for now)
 vim.cmd([[let &t_Cs = "\e[4:3m"]])

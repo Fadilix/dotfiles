@@ -86,19 +86,16 @@ return {
     },
   },
 
-  -- filename
   {
     "b0o/incline.nvim",
-    dependencies = { "craftzdog/solarized-osaka.nvim" },
     event = "BufReadPre",
     priority = 1200,
     config = function()
-      local colors = require("solarized-osaka.colors").setup()
       require("incline").setup({
         highlight = {
           groups = {
-            InclineNormal = { guibg = colors.magenta500, guifg = colors.base04 },
-            InclineNormalNC = { guifg = colors.violet500, guibg = colors.base03 },
+            InclineNormal = { guibg = "none", guifg = "#e6c384" },
+            InclineNormalNC = { guibg = "none", guifg = "#727169" },
           },
         },
         window = { margin = { vertical = 0, horizontal = 1 } },
@@ -123,6 +120,8 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
       local LazyVim = require("lazyvim.util")
+      local icons = LazyVim.config.icons
+
       opts.sections.lualine_c[4] = {
         LazyVim.lualine.pretty_path({
           length = 0,
@@ -131,8 +130,75 @@ return {
           directory_hl = "",
           filename_hl = "Bold",
           modified_sign = "",
-          readonly_icon = " 󰌾 ",
+          readonly_icon = "  ",
         }),
+      }
+
+      opts.sections.lualine_b = {
+        { "branch", icon = "", padding = { left = 1, right = 1 } },
+        { "diff", symbols = { added = "+", modified = "~", removed = "-" }, padding = { left = 1, right = 1 } },
+      }
+
+      table.insert(opts.sections.lualine_c, {
+        "diagnostics",
+        symbols = {
+          error = icons.diagnostics.Error,
+          warn = icons.diagnostics.Warn,
+          info = icons.diagnostics.Info,
+          hint = icons.diagnostics.Hint,
+        },
+      })
+
+      opts.sections.lualine_x = {
+        { "filetype", icon_only = false, padding = { left = 1, right = 1 } },
+        { "encoding", padding = { left = 1, right = 1 } },
+        { "fileformat", symbols = { unix = "LF", dos = "CRLF", mac = "CR" } },
+      }
+
+      opts.sections.lualine_y = {
+        { "progress", padding = { left = 1, right = 0 } },
+        { "location", padding = { left = 0, right = 1 } },
+      }
+
+      opts.options.section_separators = { left = "", right = "" }
+      opts.options.component_separators = { left = "|", right = "|" }
+      opts.options.globalstatus = true
+      opts.options.theme = {
+        normal = {
+          a = { fg = "#7e9cd8", bg = nil, gui = "bold" },
+          b = { fg = "#98bb6c", bg = nil },
+          c = { fg = "#dcd7ba", bg = nil },
+        },
+        insert = {
+          a = { fg = "#98bb6c", bg = nil, gui = "bold" },
+          b = { fg = "#7e9cd8", bg = nil },
+          c = { fg = "#dcd7ba", bg = nil },
+        },
+        visual = {
+          a = { fg = "#957fb8", bg = nil, gui = "bold" },
+          b = { fg = "#7e9cd8", bg = nil },
+          c = { fg = "#dcd7ba", bg = nil },
+        },
+        replace = {
+          a = { fg = "#e6c384", bg = nil, gui = "bold" },
+          b = { fg = "#7e9cd8", bg = nil },
+          c = { fg = "#dcd7ba", bg = nil },
+        },
+        command = {
+          a = { fg = "#7e9cd8", bg = nil, gui = "bold" },
+          b = { fg = "#98bb6c", bg = nil },
+          c = { fg = "#dcd7ba", bg = nil },
+        },
+        terminal = {
+          a = { fg = "#98bb6c", bg = nil, gui = "bold" },
+          b = { fg = "#7e9cd8", bg = nil },
+          c = { fg = "#dcd7ba", bg = nil },
+        },
+        inactive = {
+          a = { fg = "#727169", bg = nil },
+          b = { fg = "#727169", bg = nil },
+          c = { fg = "#727169", bg = nil },
+        },
       }
     end,
   },
