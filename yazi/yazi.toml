@@ -1,7 +1,16 @@
 [opener]
 edit = [
-	{ run = "$EDITOR %s", block = true, for = "unix" },
+	{ run = "nvim %s", block = true, for = "unix" },
 ]
 play = [
 	{ run = "mpv %s", orphan = true, for = "unix" },
+]
+
+[open]
+prepend_rules = [
+	{ mime = "text/*", use = "edit" },
+	{ mime = "video/*", use = "play" },
+	{ mime = "application/json", use = "edit" },
+	{ mime = "*/javascript", use = "edit" },
+	{ mime = "inode/x-empty", use = "edit" },
 ]

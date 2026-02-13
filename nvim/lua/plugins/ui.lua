@@ -86,6 +86,7 @@ return {
     },
   },
 
+  -- filename
   {
     "b0o/incline.nvim",
     event = "BufReadPre",
@@ -120,8 +121,6 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
       local LazyVim = require("lazyvim.util")
-      local icons = LazyVim.config.icons
-
       opts.sections.lualine_c[4] = {
         LazyVim.lualine.pretty_path({
           length = 0,
@@ -130,34 +129,8 @@ return {
           directory_hl = "",
           filename_hl = "Bold",
           modified_sign = "",
-          readonly_icon = "  ",
+          readonly_icon = " 󰌾 ",
         }),
-      }
-
-      opts.sections.lualine_b = {
-        { "branch", icon = "", padding = { left = 1, right = 1 } },
-        { "diff", symbols = { added = "+", modified = "~", removed = "-" }, padding = { left = 1, right = 1 } },
-      }
-
-      table.insert(opts.sections.lualine_c, {
-        "diagnostics",
-        symbols = {
-          error = icons.diagnostics.Error,
-          warn = icons.diagnostics.Warn,
-          info = icons.diagnostics.Info,
-          hint = icons.diagnostics.Hint,
-        },
-      })
-
-      opts.sections.lualine_x = {
-        { "filetype", icon_only = false, padding = { left = 1, right = 1 } },
-        { "encoding", padding = { left = 1, right = 1 } },
-        { "fileformat", symbols = { unix = "LF", dos = "CRLF", mac = "CR" } },
-      }
-
-      opts.sections.lualine_y = {
-        { "progress", padding = { left = 1, right = 0 } },
-        { "location", padding = { left = 0, right = 1 } },
       }
 
       opts.options.section_separators = { left = "", right = "" }
