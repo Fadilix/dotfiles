@@ -126,9 +126,19 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Lazy-load NVM (saves ~350ms on shell startup)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+function _nvm_lazy_load() {
+  unset -f nvm node npm npx corepack 2>/dev/null
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+for _nvm_cmd in nvm node npm npx corepack; do
+  eval "function ${_nvm_cmd}() { _nvm_lazy_load; ${_nvm_cmd} \"\$@\" }"
+done
+unset _nvm_cmd
+# Add default node to PATH so scripts can find it without triggering lazy-load
+[ -s "$NVM_DIR/alias/default" ] && PATH="$NVM_DIR/versions/node/$(cat "$NVM_DIR/alias/default")/bin:$PATH"
 
 
 # Load Angular CLI autocompletion.
@@ -296,4 +306,4 @@ esac
 # pnpm end
 export PATH="/home/fadilix/.config/herd-lite/bin:$PATH"
 export PHP_INI_SCAN_DIR="/home/fadilix/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
-export PATH="$HOME/.local/share/nvim/mason/bin:$HOME/go/bin:$PATH"
+# export PATH="$HOME/.local/share/nvim/mason/bin:$HOME/go/bin:$PATH"
