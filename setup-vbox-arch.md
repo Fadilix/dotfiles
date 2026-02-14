@@ -1,13 +1,12 @@
 # Setting up virtualbox on arch (the best way)
 
-```bash
-```
+
 ```bash
 sudo pacman -Syu virtualbox virtualbox-host-dkms linux-headers
-
+```
 # rebuild kernel modules   
 sudo dkms autoinstall
-```
+
 
 ```bash
 # load modules manually
@@ -24,5 +23,3 @@ lsmod | grep vbox
 ```
 
 After that you can reboot virtualbox or reboot the system
-
-```
