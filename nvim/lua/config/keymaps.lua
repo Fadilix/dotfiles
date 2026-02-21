@@ -45,3 +45,66 @@ keymap.set("n", "<C-w><down>", "<C-w>-")
 keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
 end, opts)
+
+-- Debugging keybindings
+keymap.set("n", "<F5>", function() require('dap').continue() end)
+keymap.set("n", "<F9>", function() require('dap').toggle_breakpoint() end)
+keymap.set("n", "<F10>", function() require('dap').step_over() end)
+keymap.set("n", "<F11>", function() require('dap').step_into() end)
+keymap.set("n", "<F12>", function() require('dap').step_out() end)
+keymap.set("n", "<leader>dr", function() require('dap').repl.open() end)
+keymap.set("n", "<leader>dl", function() require('dap').run_last() end)
+
+-- Debugging keybindings
+keymap.set("n", "<F5>", function() require('dap').continue() end)
+keymap.set("n", "<F9>", function() require('dap').toggle_breakpoint() end)
+keymap.set("n", "<F10>", function() require('dap').step_over() end)
+keymap.set("n", "<F11>", function() require('dap').step_into() end)
+keymap.set("n", "<F12>", function() require('dap').step_out() end)
+keymap.set("n", "<leader>dr", function() require('dap').repl.open() end)
+keymap.set("n", "<leader>dl", function() require('dap').run_last() end)
+
+-- Debugging keybindings
+keymap.set("n", "<F5>", function() require('dap').continue() end)
+keymap.set("n", "<F9>", function() require('dap').toggle_breakpoint() end)
+keymap.set("n", "<F10>", function() require('dap').step_over() end)
+keymap.set("n", "<F11>", function() require('dap').step_into() end)
+keymap.set("n", "<F12>", function() require('dap').step_out() end)
+keymap.set("n", "<leader>dr", function() require('dap').repl.open() end)
+keymap.set("n", "<leader>dl", function() require('dap').run_last() end)
+
+-- Debugging keybindings
+keymap.set("n", "<F5>", function() require('dap').continue() end)
+keymap.set("n", "<F9>", function() require('dap').toggle_breakpoint() end)
+keymap.set("n", "<F10>", function() require('dap').step_over() end)
+keymap.set("n", "<F11>", function() require('dap').step_into() end)
+keymap.set("n", "<F12>", function() require('dap').step_out() end)
+keymap.set("n", "<leader>dr", function() require('dap').repl.open() end)
+keymap.set("n", "<leader>dl", function() require('dap').run_last() end)
+
+-- Debugging keybindings
+keymap.set("n", "<F5>", function() require('dap').continue() end)
+keymap.set("n", "<F9>", function() require('dap').toggle_breakpoint() end)
+keymap.set("n", "<F10>", function() require('dap').step_over() end)
+keymap.set("n", "<F11>", function() require('dap').step_into() end)
+keymap.set("n", "<F12>", function() require('dap').step_out() end)
+keymap.set("n", "<leader>dr", function() require('dap').repl.open() end)
+keymap.set("n", "<leader>dl", function() require('dap').run_last() end)
+
+-- Debugging keybindings
+keymap.set("n", "<F5>", function() require('dap').continue() end)
+keymap.set("n", "<F9>", function() require('dap').toggle_breakpoint() end)
+keymap.set("n", "<F10>", function() require('dap').step_over() end)
+keymap.set("n", "<F11>", function() require('dap').step_into() end)
+keymap.set("n", "<F12>", function() require('dap').step_out() end)
+keymap.set("n", "<leader>dr", function() require('dap').repl.open() end)
+keymap.set("n", "<leader>dl", function() require('dap').run_last() end)
+
+-- Debugging keybindings
+keymap.set("n", "<F5>", function() require('dap').continue() end)
+keymap.set("n", "<F9>", function() require('dap').toggle_breakpoint() end)
+keymap.set("n", "<F10>", function() require('dap').step_over() end)
+keymap.set("n", "<F11>", function() require('dap').step_into() end)
+keymap.set("n", "<F12>", function() require('dap').step_out() end)
+keymap.set("n", "<leader>dr", function() require('dap').repl.open() end)
+keymap.set("n", "<leader>dl", function() require('dap').run_last() end)
