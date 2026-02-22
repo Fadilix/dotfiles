@@ -7,9 +7,14 @@ return {
             "rcarriga/nvim-dap-ui",
             "nvim-neotest/nvim-nio",
         },
-        opts = {},
+        opts = {
+            delve = {
+                detached = true,
+            },
+        },
         config = function(_, opts)
             require("dap-go").setup(opts or {})
+            require("dapui").setup()
         end,
     },
 
@@ -94,4 +99,3 @@ return {
         config = function() end,
     },
 }
-

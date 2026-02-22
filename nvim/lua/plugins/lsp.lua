@@ -19,6 +19,7 @@ return {
                 "impl",
                 "golangci-lint",
                 "delve",
+                "pyright",
                 -- "prisma-language-server",
             })
         end,
@@ -39,6 +40,7 @@ return {
                 "gomod",
                 "gowork",
                 "gosum",
+                "python",
             },
             highlight = {
                 enable = true,
@@ -51,13 +53,21 @@ return {
         opts = {
             -- make sure mason installs the server
             servers = {
-                --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
-                --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
                 tsserver = {
                     enabled = false,
                 },
+                -- will remove this after release
                 ts_ls = {
                     enabled = false,
+                },
+                pyright = {
+                    settings = {
+                        python = {
+                            analysis = {
+                                typeCheckingMode = "basic",
+                            },
+                        },
+                    },
                 },
                 gopls = {
                     settings = {
