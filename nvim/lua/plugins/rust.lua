@@ -10,15 +10,6 @@ return {
         end,
     },
     {
-        "nvim-treesitter/nvim-treesitter",
-        opts = function(_, opts)
-            vim.list_extend(opts.ensure_installed, {
-                "rust",
-                "toml",
-            })
-        end,
-    },
-    {
         "neovim/nvim-lspconfig",
         opts = {
             servers = {
@@ -145,7 +136,7 @@ return {
     },
     -- Add rust to mini.icons
     {
-        "echasnovski/mini.icons",
+        "nvim-mini/mini.icons",
         opts = {
             file = {
                 ["Cargo.toml"] = { glyph = "󰏓", hl = "MiniIconsOrange" },

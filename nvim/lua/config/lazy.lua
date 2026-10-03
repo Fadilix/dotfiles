@@ -18,7 +18,7 @@ require("lazy").setup({
     spec = {
         -- add LazyVim and import its plugins
         { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = {
-            colorscheme = "night-owl",
+            colorscheme = "kanagawa",
         } },
         { import = "lazyvim.plugins.extras.formatting.prettier" },
         { import = "lazyvim.plugins.extras.linting.eslint" },
@@ -27,7 +27,6 @@ require("lazy").setup({
         { import = "lazyvim.plugins.extras.lang.rust" },
         { import = "lazyvim.plugins.extras.lang.json" },
         { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
-        { import = "lazyvim.plugins.extras.coding.nvim-cmp" },
         -- import/override with your plugins
         { import = "plugins" },
     },
@@ -50,9 +49,6 @@ require("lazy").setup({
             -- disable some rtp plugins
             disabled_plugins = {
                 "gzip",
-                -- "matchit",
-                -- "matchparen",
-                -- "netrwPlugin",
                 "tarPlugin",
                 "tohtml",
                 "tutor",
