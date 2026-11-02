@@ -1,42 +1,36 @@
-#!/bin/bash
-# /* ---- 💫 https://github.com/Fadilix 💫 ---- */  ##
-# For applying Pre-configured Monitor Profiles
+#!/usr/bin/env bash
+# Choose a native Lua monitor profile and reload Hyprland.
 
-# Check if rofi is already running
-if pidof rofi > /dev/null; then
-  pkill rofi
-fi
+set -euo pipefail
 
-# Variables
-iDIR="$HOME/.config/swaync/images"
-SCRIPTSDIR="$HOME/.config/hypr/scripts"
-monitor_dir="$HOME/.config/hypr/Monitor_Profiles"
-target="$HOME/.config/hypr/monitors.conf"
+config_dir="$HOME/.config/hypr"
+profiles_dir="$config_dir/lua/monitor_profiles"
+active_file="$config_dir/lua/active_monitor_profile.lua"
 rofi_theme="$HOME/.config/rofi/stellar-Monitors.rasi"
-msg='❗NOTE:❗ This will overwrite $HOME/.config/hypr/monitors.conf'
 
-# Define the list of files to ignore
-ignore_files=(
-  "README"
-)
+if pidof rofi >/dev/null 2>&1; then pkill rofi; fi
 
-# list of Monitor Profiles, sorted alphabetically with numbers first
-mon_profiles_list=$(find -L "$monitor_dir" -maxdepth 1 -type f | sed 's/.*\///' | sed 's/\.conf$//' | sort -V)
+mapfile -t profiles < <(find "$profiles_dir" -maxdepth 1 -type f -name '*.lua' -printf '%f\n' | sed 's/\.lua$//' | sort -V)
+[[ ${#profiles[@]} -gt 0 ]] || { notify-send "Monitors" "No Lua profiles found"; exit 1; }
 
-# Remove ignored files from the list
-for ignored_file in "${ignore_files[@]}"; do
-    mon_profiles_list=$(echo "$mon_profiles_list" | grep -v -E "^$ignored_file$")
-done
+chosen=$(printf '%s\n' "${profiles[@]}" | rofi -i -dmenu -config "$rofi_theme" -mesg "Choose a monitor profile")
+[[ -n "$chosen" ]] || exit 0
 
-# Rofi Menu
-chosen_file=$(echo "$mon_profiles_list" | rofi -i -dmenu -config $rofi_theme -mesg "$msg")
-
-if [[ -n "$chosen_file" ]]; then
-    full_path="$monitor_dir/$chosen_file.conf"
-    cp "$full_path" "$target"
-    
-    notify-send -u low -i "$iDIR/ja.png" "$chosen_file" "Monitor Profile Loaded"
+source_file="$profiles_dir/$chosen.lua"
+luac -p "$source_file"
+backup_file=$(mktemp)
+had_active=false
+if [[ -f "$active_file" ]]; then cp "$active_file" "$backup_file"; had_active=true; fi
+cp "$source_file" "$active_file"
+hyprctl reload >/dev/null || true
+errors=$(hyprctl configerrors)
+if [[ -n "$errors" ]]; then
+  if $had_active; then cp "$backup_file" "$active_file"; else rm -f "$active_file"; fi
+  notify-send "Monitors" "Profile failed to load; restored the previous Lua monitor settings"
+  hyprctl reload >/dev/null || true
+  rm -f "$backup_file"
+  exit 1
 fi
+rm -f "$backup_file"
 
-sleep 1
-${SCRIPTSDIR}/RefreshNoWaybar.sh &
+notify-send -u low "Monitors" "Loaded $chosen"

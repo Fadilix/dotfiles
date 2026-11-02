@@ -17,7 +17,9 @@ DURATION=1
 BEZIER=".43,1.19,1,.4"
 SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION --transition-bezier $BEZIER"
 
-swww query || swww-daemon --format xrgb && swww img -o $focused_monitor ${RANDOMPICS} $SWWW_PARAMS
+# Ensure daemon is available, then always apply the selected wallpaper.
+awww query >/dev/null 2>&1 || (awww-daemon --format xrgb >/dev/null 2>&1 & sleep 0.2)
+awww img -o $focused_monitor "${RANDOMPICS}" $SWWW_PARAMS
 
 ${scriptsDir}/WallustSwww.sh
 sleep 1

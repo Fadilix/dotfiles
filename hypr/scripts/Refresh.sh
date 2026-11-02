@@ -15,7 +15,7 @@ file_exists() {
 }
 
 # Kill already running processes
-_ps=(waybar rofi swaync ags)
+_ps=(waybar rofi ags)   # swaync removed: notifications are handled by latto
 for _prs in "${_ps[@]}"; do
   if pidof "${_prs}" >/dev/null; then
     pkill "${_prs}"
@@ -29,9 +29,10 @@ sleep 0.3
 # Relaunch waybar
 waybar &
 
-# relaunch swaync
-sleep 0.5
-swaync >/dev/null 2>&1 &
+# swaync disabled: latto (~/projects/android/latto) is the notification daemon.
+# To go back: systemctl --user unmask swaync.service, then uncomment below.
+# sleep 0.5
+# swaync >/dev/null 2>&1 &
 
 # relaunch ags
 ags &

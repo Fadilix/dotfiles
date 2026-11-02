@@ -5,8 +5,7 @@
 editor=nvim
 tty=kitty
 
-configs="$HOME/.config/hypr/configs"
-UserConfigs="$HOME/.config/hypr/UserConfigs"
+luaConfig="$HOME/.config/hypr/lua"
 
 menu(){
   printf "1. view Env-variables\n"
@@ -25,34 +24,34 @@ main() {
     choice=$(menu | rofi -i -dmenu -config ~/.config/rofi/config-compact.rasi | cut -d. -f1)
     case $choice in
         1)
-            $tty $editor "$UserConfigs/ENVariables.conf"
+            $tty $editor "$luaConfig/environment.lua"
             ;;
         2)
-            $tty $editor "$UserConfigs/WindowRules.conf"
+            $tty $editor "$luaConfig/rules.lua"
             ;;
         3)
-            $tty $editor "$UserConfigs/Startup_Apps.conf"
+            $tty $editor "$luaConfig/startup.lua"
             ;;
         4)
-            $tty $editor "$UserConfigs/UserKeybinds.conf"
+            $tty $editor "$luaConfig/bindings.lua"
             ;;
         5)
-            $tty $editor "$UserConfigs/Monitors.conf"
+            $tty $editor "$luaConfig/monitors.lua"
             ;;
         6)
-            $tty $editor "$UserConfigs/Laptops.conf"
+            $tty $editor "$luaConfig/laptops.lua"
             ;;
         7)
-            $tty $editor "$UserConfigs/UserSettings.conf"
+            $tty $editor "$luaConfig/settings.lua"
             ;;
         8)
-            $tty $editor "$UserConfigs/WorkspaceRules.conf"
+            $tty $editor "$luaConfig/workspaces.lua"
             ;;
 		9)
-            $tty $editor "$configs/Settings.conf"
+            $tty $editor "$luaConfig/startup.lua"
             ;;
         10)
-            $tty $editor "$configs/Keybinds.conf"
+            $tty $editor "$luaConfig/bindings.lua"
             ;;
         *)
             ;;

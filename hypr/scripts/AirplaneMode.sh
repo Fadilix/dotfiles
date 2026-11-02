@@ -8,9 +8,13 @@ notif="$HOME/.config/swaync/images/bell.png"
 wifi_blocked=$(rfkill list wifi | grep -o "Soft blocked: yes")
 
 if [ -n "$wifi_blocked" ]; then
-  rfkill unblock wifi
-  notify-send -u low -i "$notif" -r 99 'Airplane mode: OFF'
+  if rfkill unblock wifi; then
+    qs ipc -p "$HOME/.config/quickshell/latto" call hud airplane off >/dev/null 2>&1 \
+      || notify-send -u low -i "$notif" -r 99 'Airplane mode: OFF'
+  fi
 else
-  rfkill block wifi
-  notify-send -u low -i "$notif" -r 99 'Airplane mode: ON'
+  if rfkill block wifi; then
+    qs ipc -p "$HOME/.config/quickshell/latto" call hud airplane on >/dev/null 2>&1 \
+      || notify-send -u low -i "$notif" -r 99 'Airplane mode: ON'
+  fi
 fi

@@ -24,14 +24,9 @@ get_icon() {
     icon="$iDIR/brightness-100.png"
   fi
 }
-# Notify
-notify_user() {
-  notify-send -e -h string:x-canonical-private-synchronous:brightness_notif -h int:value:$current -u low -i "$icon" "Keyboard Brightness : $current%"
-}
-
-# Change brightness
+# Change brightness. No desktop notification.
 change_kbd_backlight() {
-  brightnessctl -d *::kbd_backlight set "$1" && get_icon && notify_user
+  brightnessctl -d *::kbd_backlight set "$1"
 }
 
 # Execute accordingly
