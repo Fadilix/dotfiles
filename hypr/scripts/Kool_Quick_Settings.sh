@@ -11,7 +11,7 @@ source "$tmp_config_file"
 # ##################################### #
 
 # variables
-configs="$HOME/.config/hypr/configs"
+luaConfig="$HOME/.config/hypr/lua"
 UserConfigs="$HOME/.config/hypr/UserConfigs"
 rofi_theme="$HOME/.config/rofi/stellar-edit.rasi"
 msg=' ⁉️ Choose what to do ⁉️'
@@ -54,15 +54,15 @@ main() {
     # Map choices to corresponding files
     case "$choice" in
     	"view/edit User Defaults") file="$UserConfigs/01-UserDefaults.conf" ;;
-        "view/edit ENV variables") file="$UserConfigs/ENVariables.conf" ;;
-        "view/edit Window Rules") file="$UserConfigs/WindowRules.conf" ;;
-        "view/edit User Keybinds") file="$UserConfigs/UserKeybinds.conf" ;;
-        "view/edit User Settings") file="$UserConfigs/UserSettings.conf" ;;
-        "view/edit Startup Apps") file="$UserConfigs/Startup_Apps.conf" ;;
-        "view/edit Decorations") file="$UserConfigs/UserDecorations.conf" ;;
-        "view/edit Animations") file="$UserConfigs/UserAnimations.conf" ;;
-        "view/edit Laptop Keybinds") file="$UserConfigs/Laptops.conf" ;;
-        "view/edit Default Keybinds") file="$configs/Keybinds.conf" ;;
+	    "view/edit ENV variables") file="$luaConfig/environment.lua" ;;
+        "view/edit Window Rules") file="$luaConfig/rules.lua" ;;
+        "view/edit User Keybinds") file="$luaConfig/bindings.lua" ;;
+        "view/edit User Settings") file="$luaConfig/settings.lua" ;;
+        "view/edit Startup Apps") file="$luaConfig/startup.lua" ;;
+        "view/edit Decorations") file="$luaConfig/settings.lua" ;;
+        "view/edit Animations") file="$luaConfig/settings.lua" ;;
+        "view/edit Laptop Keybinds") file="$luaConfig/bindings.lua" ;;
+        "view/edit Default Keybinds") file="$luaConfig/bindings.lua" ;;
         "Choose Kitty Terminal Theme") $scriptsDir/Kitty_themes.sh ;;
         "Configure Monitors (nwg-displays)") 
             if ! command -v nwg-displays &>/dev/null; then

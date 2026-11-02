@@ -9,14 +9,14 @@ export PATH="$HOME/.local/share/nvim/mason/bin:$HOME/go/bin:$PATH"
 # config for gh dash extension
 export ENHANCE_THEME=catppuccin_mocha
 
+# export ANDROID_HOME=$HOME/Library/Android/sdk  # (On macOS)
+export ANDROID_HOME=$HOME/Android/Sdk
 
-# my aliases
-alias vim=nvim
-alias perf="sudo cpupower frequency-set -g performance"
-alias powsave="sudo cpupower frequency-set -g powersave"
-alias idea="/home/fadilix/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea"
-alias logisim="/opt/logisim-evolution/bin/logisim-evolution"
-alias y=yazi
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+
+
 
 
 # Set name of the theme to load --- if set to "random", it will
@@ -88,7 +88,7 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
-    zsh-autosuggestions
+  zsh-autosuggestions
 	zsh-syntax-highlighting
 )
 
@@ -987,3 +987,20 @@ esac
 export PATH="/home/fadilix/.config/herd-lite/bin:$PATH"
 export PHP_INI_SCAN_DIR="/home/fadilix/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
 # export PATH="$HOME/.local/share/nvim/mason/bin:$HOME/go/bin:$PATH"
+
+
+
+# my aliases
+alias vim=nvim
+alias perf="sudo cpupower frequency-set -g performance"
+alias powsave="sudo cpupower frequency-set -g powersave"
+alias idea="/home/fadilix/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea"
+alias logisim="/opt/logisim-evolution/bin/logisim-evolution"
+alias y=yazi
+alias ls=eza
+export PATH="$HOME/.npm-global/bin:$PATH"
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"

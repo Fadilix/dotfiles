@@ -5,7 +5,7 @@
 #    Example:
 #    ./dispatch.sh discord 2
 #
-# 2) Call from Hyprland config (in hyprland.conf file):
+# 2) Call from Hyprland Lua config (in hyprland.lua):
 #    exec-once = /path/to/dispatch.sh <application_command> <target_workspace_number>
 #
 # Logs are saved in dispatch.log file next to the script.
@@ -21,7 +21,7 @@
 #    Наприклад:
 #    ./dispatch.sh discord 2
 #
-# 2) Виклик з конфігурації Hyprland (у файлі hyprland.conf):
+# 2) Виклик з Lua-конфігурації Hyprland (у файлі hyprland.lua):
 #    exec-once = /path/to/dispatch.sh <application_command> <target_workspace_number>
 #
 # Логи зберігаються у файлі dispatch.log поруч зі скриптом.

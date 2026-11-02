@@ -3,12 +3,16 @@
 # This is for changing kb_layouts. Set kb_layouts in $settings_file
 
 layout_f="$HOME/.cache/kb_layout"
-settings_file="$HOME/.config/hypr/UserConfigs/UserSettings.conf"
+settings_file="$HOME/.config/hypr/lua/settings.lua"
 notif="$HOME/.config/swaync/images/bell.png"
 
-# Check if ~/.cache/kb_layout exists and create it with a default layout from Settings.conf if not found
+# Read the active Lua keyboard layout list.
+kb_layout_line=$(grep -m1 -E 'kb_layout[[:space:]]*=' "$settings_file" | sed -E 's/.*kb_layout[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/')
+IFS=',' read -ra layout_mapping <<< "$kb_layout_line"
+
+# Check if ~/.cache/kb_layout exists and create it with the first configured layout.
 if [ ! -f "$layout_f" ]; then
-  default_layout=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null)
+  default_layout="${layout_mapping[0]}"
   if [ -z "$default_layout" ]; then
     default_layout="us" # Default to 'us' layout if Settings.conf or 'kb_layout' is not found
   fi
@@ -16,12 +20,6 @@ if [ ! -f "$layout_f" ]; then
 fi
 
 current_layout=$(cat "$layout_f")
-
-# Read keyboard layout settings from Settings.conf
-if [ -f "$settings_file" ]; then
-  kb_layout_line=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2)
-  IFS=',' read -ra layout_mapping <<< "$kb_layout_line"
-fi
 
 layout_count=${#layout_mapping[@]}
 

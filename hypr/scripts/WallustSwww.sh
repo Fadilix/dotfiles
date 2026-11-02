@@ -5,9 +5,6 @@
 # Define the path to the swww cache directory
 cache_dir="$HOME/.cache/swww/"
 
-# Get a list of monitor outputs
-monitor_outputs=($(ls "$cache_dir"))
-
 # Initialize a flag to determine if the ln command was executed
 ln_success=false
 
@@ -19,8 +16,12 @@ cache_file="$cache_dir$current_monitor"
 echo $cache_file
 # Check if the cache file exists for the current monitor output
 if [ -f "$cache_file" ]; then
-    # Get the wallpaper path from the cache file
-    wallpaper_path=$(cat "$cache_file")
+    # awww can prefix cache entries with filter metadata (e.g. Lanczos3/path).
+    raw_wallpaper_path=$(tr -d '\0' < "$cache_file")
+    wallpaper_path=$(printf "%s" "$raw_wallpaper_path" | sed -E 's#^[^/]*(/.*)$#\1#')
+    if [[ "$wallpaper_path" != /* ]]; then
+        wallpaper_path="$raw_wallpaper_path"
+    fi
     echo $wallpaper_path
     # symlink the wallpaper to the location Rofi can access
     if ln -sf "$wallpaper_path" "$HOME/.config/rofi/.current_wallpaper"; then

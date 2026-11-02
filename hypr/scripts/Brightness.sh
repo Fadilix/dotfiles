@@ -25,14 +25,12 @@ get_icon() {
   fi
 }
 
-# Notify
-notify_user() {
-  notify-send -e -h string:x-canonical-private-synchronous:brightness_notif -h int:value:$current -u low -i "$icon" "Brightness : $current%"
-}
-
-# Change brightness
+# Change brightness. No desktop notification: the latto island shows its own
+# brightness indicator.
 change_backlight() {
-  brightnessctl set "$1" -n && get_icon && notify_user
+  if brightnessctl set "$1" -n; then
+    qs ipc -p "$HOME/.config/quickshell/latto" call hud brightness >/dev/null 2>&1 || true
+  fi
 }
 
 # Execute accordingly

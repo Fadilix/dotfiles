@@ -1,31 +1,36 @@
-#!/bin/bash
-# /* ---- 💫 https://github.com/Fadilix 💫 ---- */  ##
-# For applying Animations from different users
+#!/usr/bin/env bash
+# Choose a native Lua animation preset and reload Hyprland.
 
-# Check if rofi is already running
-if pidof rofi > /dev/null; then
-  pkill rofi
-fi
+set -euo pipefail
 
-# Variables
-iDIR="$HOME/.config/swaync/images"
-SCRIPTSDIR="$HOME/.config/hypr/scripts"
-animations_dir="$HOME/.config/hypr/animations"
-UserConfigs="$HOME/.config/hypr/UserConfigs"
+config_dir="$HOME/.config/hypr"
+presets_dir="$config_dir/lua/animation_presets"
+active_file="$config_dir/lua/active_animations.lua"
 rofi_theme="$HOME/.config/rofi/stellar-Animations.rasi"
-msg='❗NOTE:❗ This will copy animations into UserAnimations.conf'
-# list of animation files, sorted alphabetically with numbers first
-animations_list=$(find -L "$animations_dir" -maxdepth 1 -type f | sed 's/.*\///' | sed 's/\.conf$//' | sort -V)
 
-# Rofi Menu
-chosen_file=$(echo "$animations_list" | rofi -i -dmenu -config $rofi_theme -mesg "$msg")
+if pidof rofi >/dev/null 2>&1; then pkill rofi; fi
 
-# Check if a file was selected
-if [[ -n "$chosen_file" ]]; then
-    full_path="$animations_dir/$chosen_file.conf"    
-    cp "$full_path" "$UserConfigs/UserAnimations.conf"    
-    notify-send -u low -i "$iDIR/ja.png" "$chosen_file" "Hyprland Animation Loaded"
+mapfile -t presets < <(find "$presets_dir" -maxdepth 1 -type f -name '*.lua' -printf '%f\n' | sed 's/\.lua$//' | sort -V)
+[[ ${#presets[@]} -gt 0 ]] || { notify-send "Animations" "No Lua presets found"; exit 1; }
+
+chosen=$(printf '%s\n' "${presets[@]}" | rofi -i -dmenu -config "$rofi_theme" -mesg "Choose an animation preset")
+[[ -n "$chosen" ]] || exit 0
+
+source_file="$presets_dir/$chosen.lua"
+luac -p "$source_file"
+backup_file=$(mktemp)
+had_active=false
+if [[ -f "$active_file" ]]; then cp "$active_file" "$backup_file"; had_active=true; fi
+cp "$source_file" "$active_file"
+hyprctl reload >/dev/null || true
+errors=$(hyprctl configerrors)
+if [[ -n "$errors" ]]; then
+  if $had_active; then cp "$backup_file" "$active_file"; else rm -f "$active_file"; fi
+  notify-send "Animations" "Preset failed to load; restored the previous Lua animation settings"
+  hyprctl reload >/dev/null || true
+  rm -f "$backup_file"
+  exit 1
 fi
+rm -f "$backup_file"
 
-sleep 1
-"$SCRIPTSDIR/RefreshNoWaybar.sh"
+notify-send -u low "Animations" "Loaded $chosen"

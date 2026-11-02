@@ -43,17 +43,9 @@
 	"align": 0,
 	"rotate": 0,
 	//"format": "{icon} {percent}%",
-	"format-icons": [
-		" ",
-		" ",
-		" ",
-		"󰃝 ",
-		"󰃞 ",
-		"󰃟 ",
-		"󰃠 "
-	],
+	// "format-icons": [ " ", " ", " ", "󰃝 ", "󰃞 ", "󰃟 ", "󰃠 " ],
 	"format": "{icon}",
-	//"format-icons": ["","","","","","","","","","","","","","",""],
+	"format-icons": ["","","","","","","","","","","","","","",""],
 	"tooltip-format": "backlight {percent}%",
 	"icon-size": 10,
 	"on-click": "",
@@ -108,7 +100,7 @@
 	"on-click": "blueman-manager",
 },
 "clock": {
-	"interval": 1,
+	"interval": 60,
     "format": " {:%I:%M %p}", // AM PM format
    // "format": " {:%H:%M:%S}", // 24H
 	"format-alt": " {:%H:%M   %Y, %d %B, %A}",
@@ -160,7 +152,7 @@
 },
 "cpu": {
 	"format": "{usage}% 󰍛",
-	"interval": 1,
+	"interval": 60,
 	"min-length": 5,
 	"format-alt-click": "click",
 	"format-alt": "{icon0}{icon1}{icon2}{icon3} {usage:>2}% 󰍛",
@@ -279,7 +271,7 @@
 	"on-click-right": "kitty nmtui"
 },
 "network#speed": {
-	"interval": 1,
+	"interval": 60,
 	"format": "{ifname}",
 	"format-wifi": "{icon}  {bandwidthUpBytes}  {bandwidthDownBytes}",
 	"format-ethernet": "󰌘  {bandwidthUpBytes}  {bandwidthDownBytes}",
@@ -413,7 +405,7 @@
 },
 "clock#vertical": {
 	"format": "\n{:%H\n%M\n%S\n\n \n%d\n%m\n%y}",
-	"interval": 1,
+	"interval": 2,
 	//"format": "\n{:%I\n%M\n%p\n\n \n%d\n%m\n%y}",
 	"tooltip": true,
 	"tooltip-format": "{calendar}",

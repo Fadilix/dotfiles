@@ -5,6 +5,10 @@
 iDIR="$HOME/.config/swaync/icons"
 sDIR="$HOME/.config/hypr/scripts"
 
+show_latto_volume() {
+    qs ipc -p "$HOME/.config/quickshell/latto" call hud volume >/dev/null 2>&1 || true
+}
+
 # Get Volume
 get_volume() {
     volume=$(pamixer --get-volume)
@@ -29,14 +33,13 @@ get_icon() {
     fi
 }
 
-# Notify
+# Feedback after a volume change. No desktop notification: the latto island
+# shows its own volume indicator. Only the volume tick sound is played.
 notify_user() {
-    if [[ "$(get_volume)" == "Muted" ]]; then
-        notify-send -e -h string:x-canonical-private-synchronous:volume_notif -u low -i "$(get_icon)" "Volume: Muted"
-    else
-        notify-send -e -h int:value:"$(get_volume | sed 's/%//')" -h string:x-canonical-private-synchronous:volume_notif -u low -i "$(get_icon)" "Volume: $(get_volume)"
+    if [[ "$(get_volume)" != "Muted" ]]; then
         "$sDIR/Sounds.sh" --volume
     fi
+    show_latto_volume
 }
 
 # Increase Volume
@@ -60,18 +63,18 @@ dec_volume() {
 # Toggle Mute
 toggle_mute() {
 	if [ "$(pamixer --get-mute)" == "false" ]; then
-		pamixer -m && notify-send -e -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF"
+		pamixer -m && show_latto_volume
 	elif [ "$(pamixer --get-mute)" == "true" ]; then
-		pamixer -u && notify-send -e -u low -i "$(get_icon)" "Volume Switched ON"
+		pamixer -u && show_latto_volume
 	fi
 }
 
 # Toggle Mic
 toggle_mic() {
 	if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
-		pamixer --default-source -m && notify-send -e -u low -i "$iDIR/microphone-mute.png" "Microphone Switched OFF"
+		pamixer --default-source -m
 	elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
-		pamixer -u --default-source u && notify-send -e -u low -i "$iDIR/microphone.png" "Microphone Switched ON"
+		pamixer -u --default-source u
 	fi
 }
 # Get Mic Icon
@@ -94,11 +97,9 @@ get_mic_volume() {
     fi
 }
 
-# Notify for Microphone
+# Microphone level changes no longer send a desktop notification.
 notify_mic_user() {
-    volume=$(get_mic_volume)
-    icon=$(get_mic_icon)
-    notify-send -e -h int:value:"$volume" -h "string:x-canonical-private-synchronous:volume_notif" -u low -i "$icon" "Mic-Level: $volume"
+    :
 }
 
 # Increase MIC Volume
