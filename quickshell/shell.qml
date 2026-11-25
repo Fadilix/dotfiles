@@ -10,55 +10,6 @@ import Qt5Compat.GraphicalEffects
 ShellRoot {
     id: root
 
-    property string mcqMessage: ""
-    property bool mcqBusy: false
-
-    function captureMcq() {
-        if (mcqBusy)
-            return;
-        mcqBusy = true;
-        mcqMessage = "";
-        mcqHideTimer.stop();
-        mcqCaptureProcess.exec(["sh", decodeURIComponent(new URL(Qt.resolvedUrl("capture-and-ask.sh")).pathname)]);
-    }
-
-    function showMcqResult(text) {
-        mcqBusy = false;
-        mcqMessage = text.trim() || "No answer returned";
-        mcqHideTimer.restart();
-    }
-
-    function handleMcqOutput(line) {
-        const output = line.trim();
-        if (output === "__MOODCQ_CAPTURED__")
-            return;
-        showMcqResult(output);
-    }
-
-    GlobalShortcut {
-        appid: "moodcq"
-        name: "mcq-screenshot"
-        description: "Capture the screen and read a multiple-choice question"
-        onPressed: root.captureMcq()
-    }
-
-    Process {
-        id: mcqCaptureProcess
-        stdout: SplitParser {
-            onRead: data => root.handleMcqOutput(data)
-        }
-        onExited: {
-            if (root.mcqBusy)
-                root.showMcqResult("No answer returned")
-        }
-    }
-
-    Timer {
-        id: mcqHideTimer
-        interval: 5000
-        onTriggered: root.mcqMessage = ""
-    }
-
     MonitorPanel {
         walBackground: root.walBackground
         walForeground: root.walForeground
@@ -2921,32 +2872,4 @@ ShellRoot {
         target: "bluetooth"
         function toggle() { root.toggleBluetooth() }
     }
-
-    PanelWindow {
-        id: mcqAnswerOverlay
-        visible: root.mcqMessage.length > 0
-        focusable: false
-        exclusionMode: ExclusionMode.Ignore
-        WlrLayershell.layer: WlrLayer.Overlay
-        anchors { left: true; bottom: true }
-        margins { left: 24; bottom: 24 }
-        implicitWidth: Math.min(900, Math.max(120, mcqAnswerText.implicitWidth + 8))
-        implicitHeight: Math.max(48, mcqAnswerText.implicitHeight + 8)
-        color: "transparent"
-
-        Text {
-            id: mcqAnswerText
-            anchors.fill: parent
-            anchors.leftMargin: 4
-            anchors.rightMargin: 4
-            text: root.mcqMessage
-            color: root.walForeground
-            font.pixelSize: 18
-            font.weight: Font.DemiBold
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignLeft
-            wrapMode: Text.WordWrap
-        }
-    }
-
 }
