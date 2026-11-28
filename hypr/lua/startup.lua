@@ -11,12 +11,12 @@ local commands = {
     "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
     "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
     scripts .. "/Polkit.sh",
-    "quickshell",
+    "quickshell --no-duplicate",
     "nm-applet --indicator",
     "wl-paste --type text --watch cliphist store",
     "wl-paste --type image --watch cliphist store",
     "hypridle",
-    "/usr/local/bin/pypr --debug /tmp/pypr.log",
+    "/usr/bin/pypr",
     "/home/fadilix/.local/bin/latto start",
 }
 

@@ -60,6 +60,6 @@ hl.window_rule({ name = "windowrule-57", match = { class = "^(evince|wihotspot-g
 hl.window_rule({ name = "windowrule-58", match = { class = "^(file-roller|org.gnome.FileRoller)$" }, size = "(monitor_w*0.6) (monitor_h*0.7)" })
 hl.layer_rule({ name = "clipboard-blur", match = { namespace = "quickshell-clipboard" }, ignore_alpha = 0.5, blur = true })
 hl.layer_rule({ name = "emoji-blur", match = { namespace = "quickshell-emoji" }, ignore_alpha = 0.5, blur = true })
-hl.layer_rule({ name = "glass-blur", match = { namespace = "quickshell-glass" }, ignore_alpha = 0.5, blur = true })
+hl.layer_rule({ name = "glass-blur", match = { namespace = "quickshell-glass" }, ignore_alpha = 0.5, blur = true, no_anim = true })
 hl.layer_rule({ name = "layerrule-1", match = { namespace = "overview" }, ignore_alpha = 0, blur = true })
 hl.window_rule({ name = "windowrule-59", match = { title = "^(Picture-in-Picture)$" }, pin = true, float = true, size = "(monitor_w*0.25) (monitor_h*0.25)", move = "((monitor_w*0.72)) ((monitor_h*0.07))" })

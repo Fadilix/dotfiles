@@ -17,6 +17,12 @@ PanelWindow {
     property bool open: false
     property int cardWidth: 600
     property int cardHeight: 400
+    property real cardY: -1                 // -1 centers the card vertically
+    property real dimOpacity: 0.3
+    property real cardRadius: 20
+    property color cardColor: Qt.rgba(0.035, 0.035, 0.05, 0.72)
+    property color cardBorder: Qt.rgba(1, 1, 1, 0.1)
+    property real contentMargin: 18
     property Item focusItem: null
     property int selected: 0
     property point lastMouse: Qt.point(-1, -1)
@@ -59,7 +65,7 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         color: "#000000"
-        opacity: card.opacity * 0.3
+        opacity: card.opacity * panel.dimOpacity
     }
     MouseArea {
         anchors.fill: parent
@@ -68,24 +74,24 @@ PanelWindow {
 
     Rectangle {
         id: card
-        anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
         width: Math.min(panel.cardWidth, panel.width - 60)
         height: Math.min(panel.cardHeight, panel.height - 60)
-        radius: 20
-        color: Qt.rgba(0.035, 0.035, 0.05, 0.72)
+        y: panel.cardY >= 0 ? panel.cardY : (parent.height - height) / 2
+        radius: panel.cardRadius
+        color: panel.cardColor
         border.width: 1
-        border.color: Qt.rgba(1, 1, 1, 0.1)
+        border.color: panel.cardBorder
+        // Appears at once on open; only the close fades, so opening never waits on an animation.
         opacity: panel.open ? 1 : 0
-        scale: panel.open ? 1 : 0.96
-        Behavior on opacity { NumberAnimation { duration: 140; easing.type: Easing.OutCubic } }
-        Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+        Behavior on opacity { NumberAnimation { duration: panel.open ? 0 : 90; easing.type: Easing.OutCubic } }
 
         MouseArea { anchors.fill: parent }  // clicks on the card do not close it
 
         Item {
             id: holder
             anchors.fill: parent
-            anchors.margins: 18
+            anchors.margins: panel.contentMargin
         }
     }
 }

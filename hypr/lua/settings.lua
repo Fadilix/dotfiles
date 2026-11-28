@@ -51,6 +51,11 @@ hl.config({
         },
     },
     animations = { enabled = true },
+    render = {
+        -- Avoid display profile changes and HDR modesets when entering fullscreen.
+        send_content_type = false,
+        cm_auto_hdr = 0,
+    },
     input = {
         kb_layout = "fr,us",
         kb_options = "grp:alt_shift_toggle, caps:shiftlock",
@@ -94,7 +99,10 @@ hl.config({
         pass_mouse_when_bound = false,
     },
     xwayland = { force_zero_scaling = true },
-    cursor = { enable_hyprcursor = true },
+    -- hyprcursor ignored app-requested shapes (resize, text, pointer) with Bibata; XCursor works.
+    cursor = { enable_hyprcursor = false },
+    -- Debug logging wrote every input event to disk (59 MB per session).
+    debug = { disable_logs = true },
 })
 
 -- Formerly general.gesture = 3, horizontal, workspace.

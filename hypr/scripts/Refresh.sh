@@ -1,6 +1,6 @@
 #!/bin/bash
 # /* ---- 💫 https://github.com/Fadilix 💫 ---- */  ##
-# Scripts for refreshing ags waybar, rofi, swaync, wallust
+# Scripts for refreshing ags, rofi, swaync, wallust
 
 SCRIPTSDIR=$HOME/.config/hypr/scripts
 UserScripts=$HOME/.config/hypr/UserScripts
@@ -15,7 +15,7 @@ file_exists() {
 }
 
 # Kill already running processes
-_ps=(waybar rofi ags)   # swaync removed: notifications are handled by latto
+_ps=(rofi ags)   # swaync removed: notifications are handled by latto
 for _prs in "${_ps[@]}"; do
   if pidof "${_prs}" >/dev/null; then
     pkill "${_prs}"
@@ -26,8 +26,6 @@ done
 ags -q
 
 sleep 0.3
-# Relaunch waybar
-waybar &
 
 # swaync disabled: latto (~/projects/android/latto) is the notification daemon.
 # To go back: systemctl --user unmask swaync.service, then uncomment below.

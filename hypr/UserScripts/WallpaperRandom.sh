@@ -22,5 +22,3 @@ awww query >/dev/null 2>&1 || (awww-daemon --format xrgb >/dev/null 2>&1 & sleep
 awww img -o $focused_monitor "${RANDOMPICS}" $SWWW_PARAMS
 
 ${scriptsDir}/WallustSwww.sh
-sleep 1
-${scriptsDir}/Refresh.sh

@@ -1,0 +1,5 @@
+
+[Keyd virtual keyboard is internal]
+MatchUdevType=keyboard
+MatchName=keyd virtual keyboard
+AttrKeyboardIntegration=internal

@@ -28,7 +28,6 @@ folders=(
   "nvim"
   "rofi"
   "swaync"
-  "waybar"
   "tmux"
 )
 
@@ -39,7 +38,6 @@ packages_to_install=(
   "neovim"
   "rofi"
   "swaync"
-  "waybar"
   "fastfetch"
   "zoxide"
   "fzf"

@@ -998,9 +998,17 @@ alias idea="/home/fadilix/.local/share/JetBrains/Toolbox/apps/intellij-idea-ulti
 alias logisim="/opt/logisim-evolution/bin/logisim-evolution"
 alias y=yazi
 alias ls=eza
+alias claude="claude --dangerously-skip-permissions"
+alias claude-perso="CLAUDE_CONFIG_DIR=$HOME/.claude-perso command claude --dangerously-skip-permissions"
 export PATH="$HOME/.npm-global/bin:$PATH"
 
 # Hermes Agent — ensure ~/.local/bin is on PATH
 export PATH="$HOME/.local/bin:$PATH"
 
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+if [[ "$TERM_PROGRAM" == "kiro" ]]; then
+  . "$(kiro --locate-shell-integration-path zsh)"
+fi
+
+# Flutter et outils Android
+export PATH="$HOME/development/flutter/bin:$PATH"
+export PATH="$HOME/Android/Sdk/cmdline-tools/latest/bin:$PATH"

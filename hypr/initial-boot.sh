@@ -10,7 +10,6 @@
 # Variables
 scriptsDir=$HOME/.config/hypr/scripts
 wallpaper=$HOME/.config/hypr/wallpaper_effects/.wallpaper_current
-waybar_style="$HOME/.config/waybar/style/[Extra] Modern-Combined - Transparent.css"
 kvantum_theme="catppuccin-mocha-blue"
 color_scheme="prefer-dark"
 gtk_theme="Flat-Remix-GTK-Blue-Dark"
@@ -49,14 +48,9 @@ if [ ! -f "$HOME/.config/hypr/.initial_startup_done" ]; then
     # initiate kvantum theme
     kvantummanager --set "$kvantum_theme" > /dev/null 2>&1 &
 
-    # initiate the kb_layout (for some reason) waybar cant launch it
+    # initiate the kb_layout
     "$scriptsDir/SwitchKeyboardLayout.sh" > /dev/null 2>&1 &
 
-	# waybar style
-	#if [ -L "$HOME/.config/waybar/config" ]; then
-    ##    	ln -sf "$waybar_style" "$HOME/.config/waybar/style.css"
-    #   	"$scriptsDir/Refresh.sh" > /dev/null 2>&1 & 
-	#fi
 
 
     # Create a marker file to indicate that the script has been executed.

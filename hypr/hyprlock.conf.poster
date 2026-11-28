@@ -1,0 +1,91 @@
+# hyprlock — "poster clock"
+# Oxblood ground, stacked wide numerals bottom-left, a hairline password field bottom-right.
+
+general {
+    hide_cursor = true
+    immediate_render = true
+}
+
+animations {
+    enabled = true
+    animation = fadeIn, 1, 4, default
+}
+
+background {
+    monitor =
+    color = rgb(1A0B0F)
+}
+
+# hours
+label {
+    monitor =
+    text = cmd[update:1000] echo "<span weight='900'>$(date +%H)</span>"
+    color = rgb(F3E9DC)
+    font_size = 280
+    font_family = Mona Sans Display Expanded
+    position = 72, 333
+    halign = left
+    valign = bottom
+}
+
+# minutes
+label {
+    monitor =
+    text = cmd[update:1000] echo "<span weight='900'>$(date +%M)</span>"
+    color = rgb(8A3D4E)
+    font_size = 280
+    font_family = Mona Sans Display Expanded
+    position = 72, 44
+    halign = left
+    valign = bottom
+}
+
+# date, under the minutes
+label {
+    monitor =
+    text = cmd[update:60000] date +"%A %-d %B"
+    color = rgb(A09689)
+    font_size = 14
+    font_family = Mona Sans Medium
+    position = 80, 48
+    halign = left
+    valign = bottom
+}
+
+# password: no box, a hairline underneath
+input-field {
+    monitor =
+    size = 260, 40
+    outline_thickness = 0
+    rounding = 0
+    inner_color = rgba(0, 0, 0, 0)
+    outer_color = rgba(0, 0, 0, 0)
+    font_color = rgb(F3E9DC)
+    font_family = Mona Sans
+    check_color = rgba(0, 0, 0, 0)
+    fail_color = rgba(0, 0, 0, 0)
+    capslock_color = rgba(0, 0, 0, 0)
+    dots_size = 0.22
+    dots_spacing = 0.5
+    dots_center = false
+    dots_text_format = •
+    fade_on_empty = false
+    placeholder_text = <span foreground="##A09689">Password</span>
+    fail_text = <span foreground="##C8606F">Wrong password</span>
+    check_text = <span foreground="##DCC09A">Checking…</span>
+    hide_input = false
+    position = -80, 54
+    halign = right
+    valign = bottom
+}
+
+shape {
+    monitor =
+    size = 260, 1
+    color = rgba(243, 233, 220, 0.28)
+    rounding = 0
+    border_size = 0
+    position = -80, 48
+    halign = right
+    valign = bottom
+}

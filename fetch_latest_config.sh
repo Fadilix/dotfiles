@@ -28,7 +28,6 @@ folders=(
   "nvim"
   "rofi"
   "swaync"
-  "waybar"
   "tmux"
   "yazi"
 )

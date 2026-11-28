@@ -82,6 +82,11 @@ Most user configurations can be found in:
 - `~/.config/hypr/UserConfigs/` - User-specific settings
 - `~/.config/hypr/UserScripts/` - Custom scripts
 
+### Libinput keyboard pairing for touchpad disable-while-typing
+
+See [`libinput/README.md`](libinput/README.md) for the setup, verification, and
+removal steps.
+
 ## 🛠️ Customization
 
 ### Themes
