@@ -48,6 +48,9 @@ GlassPanel {
 
     function keyName(b) {
         if (b.keycode >= 10 && b.keycode <= 19) return "" + (b.keycode - 9) % 10
+        // Physical keys bound by keycode, labelled as printed on the AZERTY keyboard.
+        var azerty = { 34: "^", 35: "$" }
+        if (azerty[b.keycode]) return azerty[b.keycode]
         if (b.keycode > 0) return "code " + b.keycode
         var named = keyNames[b.key.toLowerCase()]
         if (named) return named
