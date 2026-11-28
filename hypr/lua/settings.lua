@@ -31,7 +31,7 @@ hl.config({
         border_size = 0,
         resize_on_border = true,
         col = { active_border = active_border },
-        layout = "dwindle",
+        layout = "master",
     },
     decoration = {
         rounding = 10,

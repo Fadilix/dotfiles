@@ -67,6 +67,12 @@ hl.bind("SUPER + CTRL + D", hl.dsp.layout("removemaster"), { description = "Layo
 hl.bind("SUPER + J", hl.dsp.layout("cyclenext"), { description = "Layout: Focus next in layout" })
 hl.bind("SUPER + P", hl.dsp.window.pseudo(), { description = "Layout: Toggle pseudo-tiling" })
 hl.bind("SUPER + CTRL + Return", hl.dsp.layout("swapwithmaster"), { description = "Layout: Swap with master" })
+-- Rearrange tiles on the current workspace: windows trade places and sizes, everything stays tiled.
+hl.bind("SUPER + code:35", hl.dsp.layout("rollnext"), { description = "Layout: Rotate windows forward" })
+hl.bind("SUPER + code:34", hl.dsp.layout("rollprev"), { description = "Layout: Rotate windows back" })
+hl.bind("SUPER + S", hl.dsp.layout("swapwithmaster"), { description = "Layout: Move focused window to the big slot" })
+hl.bind("SUPER + SPACE", hl.dsp.layout("orientationnext"), { description = "Layout: Flip arrangement (big slot left, top, right, bottom, center)" })
+hl.bind("SUPER + SHIFT + SPACE", hl.dsp.layout("orientationprev"), { description = "Layout: Flip arrangement back" })
 hl.bind("SUPER + G", hl.dsp.group.toggle(), { description = "Layout: Toggle window group" })
 hl.bind("SUPER + SHIFT + tab", hl.dsp.group.next(), { description = "Layout: Next window in group" })
 hl.bind("ALT + Tab", hl.dsp.window.cycle_next(), { description = "Windows: Cycle to next window" })
@@ -134,8 +140,8 @@ hl.bind("SUPER + SHIFT + code:16", hl.dsp.window.move({ workspace = "7", follow 
 hl.bind("SUPER + SHIFT + code:17", hl.dsp.window.move({ workspace = "8", follow = true }), { description = "Workspaces: Move window to workspace 8" })
 hl.bind("SUPER + SHIFT + code:18", hl.dsp.window.move({ workspace = "9", follow = true }), { description = "Workspaces: Move window to workspace 9" })
 hl.bind("SUPER + SHIFT + code:19", hl.dsp.window.move({ workspace = "10", follow = true }), { description = "Workspaces: Move window to workspace 10" })
-hl.bind("SUPER + SHIFT + bracketleft", hl.dsp.window.move({ workspace = "r-1", follow = true }), { description = "Workspaces: Move window to previous workspace" })
-hl.bind("SUPER + SHIFT + bracketright", hl.dsp.window.move({ workspace = "r+1", follow = true }), { description = "Workspaces: Move window to next workspace" })
+hl.bind("SUPER + SHIFT + code:34", hl.dsp.window.move({ workspace = "r-1", follow = true }), { description = "Workspaces: Move window to previous workspace" })
+hl.bind("SUPER + SHIFT + code:35", hl.dsp.window.move({ workspace = "r+1", follow = true }), { description = "Workspaces: Move window to next workspace" })
 hl.bind("SUPER + CTRL + code:10", hl.dsp.window.move({ workspace = "1", follow = false }), { description = "Workspaces: Send window, stay here, to workspace 1" })
 hl.bind("SUPER + CTRL + code:11", hl.dsp.window.move({ workspace = "2", follow = false }), { description = "Workspaces: Send window, stay here, to workspace 2" })
 hl.bind("SUPER + CTRL + code:12", hl.dsp.window.move({ workspace = "3", follow = false }), { description = "Workspaces: Send window, stay here, to workspace 3" })
@@ -146,8 +152,8 @@ hl.bind("SUPER + CTRL + code:16", hl.dsp.window.move({ workspace = "7", follow =
 hl.bind("SUPER + CTRL + code:17", hl.dsp.window.move({ workspace = "8", follow = false }), { description = "Workspaces: Send window, stay here, to workspace 8" })
 hl.bind("SUPER + CTRL + code:18", hl.dsp.window.move({ workspace = "9", follow = false }), { description = "Workspaces: Send window, stay here, to workspace 9" })
 hl.bind("SUPER + CTRL + code:19", hl.dsp.window.move({ workspace = "10", follow = false }), { description = "Workspaces: Send window, stay here, to workspace 10" })
-hl.bind("SUPER + CTRL + bracketleft", hl.dsp.window.move({ workspace = "r-1", follow = false }), { description = "Workspaces: Send window to previous, stay here" })
-hl.bind("SUPER + CTRL + bracketright", hl.dsp.window.move({ workspace = "r+1", follow = false }), { description = "Workspaces: Send window to next, stay here" })
+hl.bind("SUPER + CTRL + code:34", hl.dsp.window.move({ workspace = "r-1", follow = false }), { description = "Workspaces: Send window to previous, stay here" })
+hl.bind("SUPER + CTRL + code:35", hl.dsp.window.move({ workspace = "r+1", follow = false }), { description = "Workspaces: Send window to next, stay here" })
 hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "e+1" }), { description = "Workspaces: Next used workspace" })
 hl.bind("SUPER + mouse_up", hl.dsp.focus({ workspace = "e-1" }), { description = "Workspaces: Previous used workspace" })
 hl.bind("SUPER + period", hl.dsp.focus({ workspace = "e+1" }), { description = "Workspaces: Next used workspace" })
@@ -165,17 +171,49 @@ hl.bind("SUPER + I", hl.dsp.exec_cmd("qs ipc call dashboard toggle"), { descript
 hl.bind("SUPER + SHIFT + M", hl.dsp.exec_cmd("qs ipc call music toggle"), { description = "Panels: Music" })
 hl.bind("SUPER + ALT + M", hl.dsp.exec_cmd("qs ipc call monitors toggle"), { description = "Panels: Monitor layout" })
 hl.bind("SUPER + W", hl.dsp.exec_cmd("qs ipc call wallpaper toggle"), { description = "Panels: Wallpaper picker" })
-hl.bind("SUPER + O", hl.dsp.exec_cmd("obsidian"), { description = "Apps: Obsidian" })
+-- Focus or launch: an app key jumps to that app if it is open anywhere, and opens it if not.
+-- Pressed again while the app is focused, it cycles through that app's other windows.
+-- SUPER + CTRL + the same key always opens a new window.
+local function focus_or_launch(classes, cmd)
+    return function()
+        local matches = {}
+        for _, w in ipairs(hl.get_windows()) do
+            local class, initial = string.lower(w.class or ""), string.lower(w.initial_class or "")
+            for _, want in ipairs(classes) do
+                if class == want or initial == want then
+                    table.insert(matches, w)
+                    break
+                end
+            end
+        end
+        if #matches == 0 then
+            hl.dispatch(hl.dsp.exec_cmd(cmd))
+            return
+        end
+        -- focus_history_id 0 is the most recently focused window
+        table.sort(matches, function(a, b) return a.focus_history_id < b.focus_history_id end)
+        local target = matches[1]
+        if target.active and #matches > 1 then target = matches[#matches] end
+        hl.dispatch(hl.dsp.focus({ window = target }))
+    end
+end
+
+hl.bind("SUPER + O", focus_or_launch({ "obsidian", "md.obsidian.obsidian" }, "obsidian"), { description = "Apps: Obsidian (focus or open)" })
+hl.bind("SUPER + CTRL + O", hl.dsp.exec_cmd("obsidian"), { description = "Apps: New Obsidian window" })
 hl.bind("SUPER + Return", hl.dsp.exec_cmd("kitty"), { description = "Apps: Terminal" })
-hl.bind("SUPER + K", hl.dsp.exec_cmd("kitty --class kitty-super-k --start-as=normal -o remember_window_size=no"), { description = "Apps: Terminal (tiled)" })
+hl.bind("SUPER + K", focus_or_launch({ "kitty-super-k" }, "kitty --class kitty-super-k --start-as=normal -o remember_window_size=no"), { description = "Apps: Terminal (tiled) (focus or open)" })
+hl.bind("SUPER + CTRL + K", hl.dsp.exec_cmd("kitty --class kitty-super-k --start-as=normal -o remember_window_size=no"), { description = "Apps: New Terminal (tiled) window" })
 hl.bind("SUPER + T", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/launch_kitty_tmux_nvim.sh"), { description = "Apps: Neovim in tmux" })
-hl.bind("SUPER + E", hl.dsp.exec_cmd("thunar"), { description = "Apps: File manager" })
+hl.bind("SUPER + E", focus_or_launch({ "thunar" }, "thunar"), { description = "Apps: File manager (focus or open)" })
+hl.bind("SUPER + CTRL + E", hl.dsp.exec_cmd("thunar"), { description = "Apps: New File manager window" })
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("qalculate-gtk"), { description = "Apps: Calculator" })
 hl.bind("SUPER + SHIFT + Return", hl.dsp.exec_cmd("pypr toggle term"), { description = "Apps: Dropdown terminal" })
 hl.bind("SUPER + SHIFT + O", hl.dsp.exec_cmd("$HOME/.config/hypr/UserScripts/ZshChangeTheme.sh"), { description = "Apps: Change zsh theme" })
-hl.bind("SUPER + B", hl.dsp.exec_cmd("zen-browser"), { description = "Apps: Browser" })
+hl.bind("SUPER + B", focus_or_launch({ "zen" }, "zen-browser"), { description = "Apps: Browser (focus or open)" })
+hl.bind("SUPER + CTRL + B", hl.dsp.exec_cmd("zen-browser"), { description = "Apps: New Browser window" })
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -a / –autocopy"), { description = "Apps: Color picker" })
-hl.bind("SUPER + C", hl.dsp.exec_cmd("code"), { description = "Apps: VS Code" })
+hl.bind("SUPER + C", focus_or_launch({ "code", "code-oss", "com.microsoft.vscode" }, "code"), { description = "Apps: VS Code (focus or open)" })
+hl.bind("SUPER + CTRL + C", hl.dsp.exec_cmd("code"), { description = "Apps: New VS Code window" })
 hl.bind("ALT + R", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/ToggleBlueLight.sh"), { description = "System: Toggle blue light filter" })
 hl.bind("SUPER + Y", hl.dsp.exec_cmd("$HOME/.config/hypr/UserScripts/toggle_pointers.sh"), { description = "System: Toggle pointer" })
 hl.bind(
